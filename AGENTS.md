@@ -4,162 +4,150 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-# AGENTS.md — Settled Field Platform
+# settled-field-platform Codex Instructions
 
-## Purpose
+settled-field-platform is a summit and event platform tied to the existing Settled on the Field website and brand.
 
-This repository builds the Settled Field Platform.
+The first version is a conversion system first. It should help people discover the summit, understand the value, view speaker information, purchase tickets, and move into follow-on engagement.
 
-It is a **conversion system**, not a generic website.
+The platform must preserve existing website content while adding a real application foundation that can grow over time.
 
-Primary flow (locked):
+## Repo-local Codex continuity docs
 
-Landing → Summit → Register → Pay → Confirmation
+This repo may include local-only continuity files under `docs/codex/`.
 
----
+When present, they are:
 
-## Execution Confidence Rules
+- `docs/codex/PROJECT_MEMORY.md` — durable project truths
+- `docs/codex/CURRENT_STATE.md` — live project state
 
-All changes must prioritize high-confidence, low-risk execution.
+These files complement `AGENTS.md` and must not override it.
 
-### Scope Discipline
-- Stay strictly within the current issue
-- Do not expand scope or add features
-- Do not mix structure work with feature work
+When asked for context or status, Codex must read those files by exact path from disk and must not rely on repo-wide scan discovery alone, because they may be intentionally local-only and git-ignored.
 
-### Change Constraints
-- No new dependencies unless explicitly required
-- No business logic unless explicitly required
-- No data fetching unless explicitly required
-- Prefer minimal, deterministic changes
+## Non-negotiable constraints
 
-### Framework Discipline
-- Follow Next.js App Router conventions
-- Do not assume legacy Pages Router behavior
-- Keep layout and routing simple and predictable
+- Preserve existing website data and content
+- Do not break, replace, or silently overwrite the current website during platform buildout
+- The product is a conversion system first, not a bloated all-in-one platform
+- Security is baseline work, not optional polish
+- CVE hygiene must remain current
+- Scanning and CI/CD are part of the project baseline
+- No speculative architecture expansion without approval
+- No hidden refactors
+- No silent behavior changes
+- No dependency additions without approval unless explicitly required and approved
+- No scope expansion beyond the active issue
 
-### Required Output Format
-All task responses must include:
+If a task risks any of these, stop immediately.
 
-1. diff summary  
-2. files changed  
-3. risks  
-4. verification steps  
+## Workflow rules
 
-### Safety Rules
-- Do not apply changes without review
-- Stop and surface ambiguity instead of guessing
-- Preserve build integrity at all times
+- One GitHub issue per branch
+- Branch names should follow: `issue-X-Y-short-description`
+- Commit messages should follow: `Issue X-Y: <plain English>`
+- Stay within issue scope
+- Do not expand scope without explicit instruction
+- Prefer the smallest safe change
+- No opportunistic cleanup
+- No dependency additions without approval
+- Stop if a requirement is ambiguous enough to risk the current site, security posture, or MVP focus
 
----
+## Product and UX guardrails
 
-## Product Rules
+Keep the first-version workflow focused on:
 
-### This product is:
-- a guided experience for transition and direction
-- a Summit registration and conversion system
+- landing and awareness
+- speaker discovery
+- ticket purchase
+- scheduling or booking where scoped
+- educational content access where scoped
+- communication or messaging where scoped
+- admin visibility where scoped
 
-### This product is NOT:
-- a blog
-- a generic event site
-- a course platform (v1)
-- a messaging/chat system (v1)
+Rules:
 
----
+- prioritize conversion and clarity over feature breadth
+- preserve the existing brand feel: clinical, conversational, calming
+- keep UX aligned to the existing website unless explicitly changed
+- do not invent major new workflows unless requested
+- read-only or reduced-scope views are acceptable when they protect MVP focus
 
-## MVP Scope (Locked)
+## Security discipline
 
-### Included
-- Landing page
-- Summit page
-- Registration (no login)
-- Stripe Checkout
-- Confirmation page
-- Admin (basic)
+Security is baseline work.
 
-### Excluded
-- user accounts
-- messaging/chat
-- LMS
-- advanced analytics
-- multi-admin roles
+- Keep dependencies current
+- Keep scanning protocol in place
+- Keep CI/CD pipeline security-conscious
+- Do not weaken auth or access boundaries
+- Do not introduce avoidable exposure of user, payment, or admin surfaces
+- Do not assume security can be deferred until later
 
----
+If a change would weaken the security posture, stop and ask.
 
-## Tech Direction (Locked)
+## Testing discipline
 
-- Next.js (App Router)
-- PostgreSQL (planned)
-- Stripe Checkout (planned)
-- Single admin model
+When changing user-facing behavior, routing, auth, checkout-related flows, admin behavior, or content-preservation-sensitive areas:
 
----
+1. Run the relevant automated checks
+2. Perform a manual verification through the real user path
+3. Confirm no regression to preserved website content
+4. Confirm the active issue scope was respected
 
-## Architecture Philosophy
+Minimum manual verification should cover the changed path end to end.
 
-- Keep it simple
-- Keep it extensible
-- Avoid premature abstraction
-- Prefer clarity over cleverness
+CI success alone is not enough.
 
----
+## Output format
 
-## Early Phase Rule (CRITICAL)
+For implementation tasks, return:
 
-This phase is:
+1. Focused diff summary
+2. Files changed
+3. Why it works
+4. Risks / edge cases
+5. Tests run
+6. Manual verification steps
+7. Commit message only if implementation is complete
 
-👉 **Structure-first**
-
-Do:
-- routes
-- folders
-- placeholders
-
-Do NOT:
-- implement features
-- add styling beyond minimal placeholders
-- introduce logic
-- introduce integrations
-
----
-
-## Admin Philosophy
-
-The system must allow the client to operate without engineering support.
-
-Admin should be:
-- simple
-- fast
-- intuitive
-
----
-
-## Security Baseline
-
-Must be preserved at all times:
-
-- HTTPS only
-- no hardcoded secrets
-- environment-based configuration
-- dependency awareness (CVE-conscious)
-- CI/CD security scanning
-
----
-
-## Stop Conditions
+## Stop conditions
 
 Stop immediately if:
 
-- scope expands beyond the issue
-- routing behavior is unclear
-- build may break
-- a dependency appears unexpectedly required
-- implementation requires assumptions not defined
+- the task would overwrite or endanger existing site content
+- a requirement would expand the product beyond the active issue
+- auth boundaries would weaken
+- security posture would weaken
+- a new dependency is needed without approval
+- the requirement is ambiguous in a way that risks the website, payment path, admin surface, or MVP focus
 
----
+When stopping, report:
 
-## Definition of Success
+- what was attempted
+- what is blocking progress
+- the smallest safe next step
 
-A clean, secure system that moves users through:
+## Preferred style
 
-Attention → Trust → Decision → Commitment → Reinforcement
+- Use plain language
+- Explain simply and explain why
+- No fluff
+- Favor clarity over cleverness
+- Prefer focused diffs over broad rewrites
+- Preserve existing behavior unless the issue explicitly changes it
+
+## Codex isolation rule
+
+This project is isolated.
+
+Codex must:
+
+- not import assumptions from other repos
+- not reuse AssetTrack patterns unless explicitly requested
+- ground decisions in:
+  - `AGENTS.md`
+  - `docs/codex/PROJECT_MEMORY.md`
+  - `docs/codex/CURRENT_STATE.md`
+
+If unsure, ask before acting.
