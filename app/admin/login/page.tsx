@@ -1,4 +1,15 @@
-export default function AdminLoginPage() {
+type AdminLoginPageProps = {
+  searchParams?: Promise<{
+    error?: string;
+  }>;
+};
+
+export default async function AdminLoginPage({
+  searchParams,
+}: AdminLoginPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const showError = resolvedSearchParams?.error === "invalid";
+
   return (
     <main
       style={{
@@ -39,6 +50,18 @@ export default function AdminLoginPage() {
         >
           Sign in to access the admin area.
         </p>
+
+        {showError ? (
+          <p
+            style={{
+              margin: "0 0 1rem",
+              color: "#b91c1c",
+              lineHeight: 1.5,
+            }}
+          >
+            Invalid email or password.
+          </p>
+        ) : null}
 
         <form action="/api/admin/login" method="post">
           <div style={{ marginBottom: "1rem" }}>
