@@ -7,6 +7,7 @@ import {
 } from "./types";
 
 export const REGISTRATION_DRAFT_COOKIE = "settled-registration-draft";
+export const REGISTRATION_DRAFT_MAX_AGE = 60 * 60 * 24;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -97,6 +98,34 @@ export function buildRegistrationDraft(
     ...values,
     submittedAt: new Date().toISOString(),
   };
+}
+
+export function hasCheckoutReadyDraft(values: RegistrationFormValues) {
+  return Object.keys(validateRegistrationValues(values)).length === 0;
+}
+
+export function serializeRegistrationDraft(draft: RegistrationDraft) {
+  return encodeURIComponent(JSON.stringify(draft));
+}
+
+export function getRegistrationDraftCookieOptions() {
+  return {
+    httpOnly: true,
+    maxAge: REGISTRATION_DRAFT_MAX_AGE,
+    path: "/",
+    sameSite: "lax" as const,
+    secure: process.env.NODE_ENV === "production",
+  };
+}
+
+export async function writeRegistrationDraft(draft: RegistrationDraft) {
+  const cookieStore = await cookies();
+
+  cookieStore.set(
+    REGISTRATION_DRAFT_COOKIE,
+    serializeRegistrationDraft(draft),
+    getRegistrationDraftCookieOptions(),
+  );
 }
 
 export async function readRegistrationDraft() {

@@ -1,12 +1,11 @@
 'use server';
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
-  REGISTRATION_DRAFT_COOKIE,
   buildRegistrationDraft,
   normalizeRegistrationValues,
   validateRegistrationValues,
+  writeRegistrationDraft,
 } from "./registration";
 import type { RegisterFormState } from "./types";
 
@@ -24,16 +23,8 @@ export async function submitRegistration(
     };
   }
 
-  const cookieStore = await cookies();
   const draft = buildRegistrationDraft(values);
-
-  cookieStore.set(REGISTRATION_DRAFT_COOKIE, encodeURIComponent(JSON.stringify(draft)), {
-    httpOnly: true,
-    maxAge: 60 * 60 * 24,
-    path: "/",
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-  });
+  await writeRegistrationDraft(draft);
 
   redirect("/register?step=payment");
 }

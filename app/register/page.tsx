@@ -2,8 +2,14 @@ import { RegisterForm } from "./register-form";
 import { readRegistrationDraft } from "./registration";
 import { EMPTY_REGISTRATION_FORM_VALUES } from "./types";
 
+function getSearchParamValue(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 type RegisterPageProps = {
   searchParams: Promise<{
+    error?: string | string[];
+    mode?: string | string[];
     step?: string | string[];
   }>;
 };
@@ -13,8 +19,10 @@ export default async function RegisterPage({
 }: RegisterPageProps) {
   const resolvedSearchParams = await searchParams;
   const draft = await readRegistrationDraft();
-  const paymentReady =
-    resolvedSearchParams.step === "payment" && draft !== null;
+  const step = getSearchParamValue(resolvedSearchParams.step);
+  const mode = getSearchParamValue(resolvedSearchParams.mode);
+  const error = getSearchParamValue(resolvedSearchParams.error);
+  const paymentReady = step === "payment" && draft !== null;
 
   return (
     <section className="register-page">
@@ -29,12 +37,47 @@ export default async function RegisterPage({
           navigating transition and looking for practical direction.
         </p>
 
+        {error === "draft" ? (
+          <div className="register-status register-status--error">
+            <p className="register-status__title">
+              Save your registration details before payment
+            </p>
+            <p className="register-status__body">
+              A valid registration draft was not available for checkout. Review
+              your details and continue again.
+            </p>
+          </div>
+        ) : null}
+
         {paymentReady ? (
           <div className="register-status register-status--success">
             <p className="register-status__title">Registration details saved</p>
             <p className="register-status__body">
               {draft?.firstName} {draft?.lastName} is ready for the payment
               handoff with {draft?.email}.
+            </p>
+          </div>
+        ) : null}
+
+        {mode === "stub" ? (
+          <div className="register-status">
+            <p className="register-status__title">Checkout stub mode</p>
+            <p className="register-status__body">
+              Stripe checkout is not live in this environment yet. Your payment
+              handoff is wired and ready for keys to be added later.
+            </p>
+          </div>
+        ) : null}
+
+        {mode === "stripe-ready" ? (
+          <div className="register-status">
+            <p className="register-status__title">
+              Stripe configuration detected
+            </p>
+            <p className="register-status__body">
+              Checkout session scaffolding is in place. The final Stripe API
+              call can be added with minimal change once live integration work
+              begins.
             </p>
           </div>
         ) : null}
