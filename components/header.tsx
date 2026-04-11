@@ -1,10 +1,23 @@
+import Link from "next/link";
+
 export function Header() {
   return (
-    <header className="border-b border-black/10 bg-white/80">
-      <div className="mx-auto w-full max-w-5xl px-6 py-4">
-        <p className="text-sm font-semibold">Settled Field Platform</p>
-        <p className="text-xs text-black/60">Shared header placeholder</p>
+    <div className="shell-header page-wrapper">
+      <div>
+        <Link className="brand-link" href="/">
+          Settled on the Field
+        </Link>
       </div>
-    </header>
+      <nav aria-label="Primary">
+        <ul className="nav-list">
+          <li>
+            <Link href="/">Landing</Link>
+          </li>
+          <li>
+            <Link href="/summit">Summit</Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
 }
