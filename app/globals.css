@@ -130,6 +130,25 @@ a {
   line-height: 1.5;
 }
 
+.register-status {
+  max-width: 40rem;
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.register-status__title {
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.register-status__body {
+  margin: 0;
+  color: var(--color-accent);
+}
+
 .register-page__grid {
   display: grid;
   gap: var(--space-12);
@@ -140,6 +159,20 @@ a {
   gap: var(--space-6);
   padding-top: var(--space-6);
   border-top: 1px solid var(--color-border);
+}
+
+.register-form__required-note,
+.register-form__feedback {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.register-form__required-note {
+  color: var(--color-accent);
+}
+
+.register-form__feedback {
+  color: var(--color-primary);
 }
 
 .register-form__grid {
@@ -159,6 +192,10 @@ a {
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.3;
+}
+
+.register-field__required {
+  color: var(--color-accent);
 }
 
 .register-field--full {
@@ -192,6 +229,17 @@ a {
 .register-field textarea:focus {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+.register-field input[aria-invalid="true"],
+.register-field textarea[aria-invalid="true"] {
+  border-color: var(--color-primary);
+}
+
+.register-field__error {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 0.9rem;
 }
 
 .register-cta {
@@ -241,6 +289,11 @@ a {
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
+}
+
+.register-cta__button:disabled {
+  opacity: 1;
+  cursor: progress;
 }
 
 .register-sidebar {
