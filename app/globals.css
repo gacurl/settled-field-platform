@@ -149,6 +149,11 @@ a {
   color: var(--color-accent);
 }
 
+.register-status--error .register-status__title,
+.register-status--error .register-status__body {
+  color: var(--color-primary);
+}
+
 .register-page__grid {
   display: grid;
   gap: var(--space-12);

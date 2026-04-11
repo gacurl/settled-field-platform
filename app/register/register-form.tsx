@@ -179,16 +179,20 @@ export function RegisterForm({
           </h2>
           <p>
             {paymentReady
-              ? "Your registration draft is saved. Payment is still the next step, and this handoff is ready for the checkout work in the next issue."
+              ? "Your registration draft is saved. Continue to payment to use the new checkout entry point, or adjust the form first and continue when it looks right."
               : "Payment is the next step. This page now captures your details, validates the essentials, and prepares a clean handoff before checkout is added."}
           </p>
         </div>
-        <button className="register-cta__button" disabled={pending} type="submit">
+        <button
+          className="register-cta__button"
+          disabled={paymentReady ? false : pending}
+          formAction={paymentReady ? "/api/checkout" : undefined}
+          formMethod={paymentReady ? "post" : undefined}
+          type="submit"
+        >
           {pending
             ? "Saving your details..."
-            : paymentReady
-              ? "Update Saved Details"
-              : "Continue to Payment"}
+            : "Continue to Payment"}
         </button>
       </div>
     </form>
