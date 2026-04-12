@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from "next/navigation";
-import { reserveRegistrationEmail } from "@/lib/registration-email-store";
+import { createRegistration } from "@/lib/registration-store";
 import {
   buildRegistrationDraft,
   isHoneypotSubmission,
@@ -34,7 +34,7 @@ export async function submitRegistration(
   }
 
   try {
-    const duplicateStatus = await reserveRegistrationEmail(values.email);
+    const duplicateStatus = await createRegistration(values);
 
     if (duplicateStatus === "duplicate") {
       return {
@@ -47,7 +47,7 @@ export async function submitRegistration(
       };
     }
   } catch (error) {
-    console.error("Unable to reserve registration email", error);
+    console.error("Unable to persist registration", error);
 
     return {
       formError:

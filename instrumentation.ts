@@ -6,6 +6,10 @@ export async function register() {
   const { initializeRegistrationEmailStore } = await import(
     "@/lib/registration-email-store"
   );
+  const { initializeRegistrationStore } = await import(
+    "@/lib/registration-store"
+  );
 
   await initializeRegistrationEmailStore();
+  await initializeRegistrationStore();
 }
