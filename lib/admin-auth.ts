@@ -3,15 +3,24 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 const ADMIN_SESSION_COOKIE = "admin_session";
 const ADMIN_SESSION_DURATION_SECONDS = 60 * 60 * 8;
 
-function getSessionSecret() {
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPassword = process.env.ADMIN_PASSWORD;
+function normalizeAdminEmail(value: string) {
+  return value.trim().toLowerCase();
+}
 
-  if (!adminEmail || !adminPassword) {
+function getAdminAuthConfig() {
+  const adminEmail = process.env.ADMIN_EMAIL?.trim();
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const sessionSecret = process.env.ADMIN_SESSION_SECRET?.trim();
+
+  if (!adminEmail || !adminPassword || !sessionSecret) {
     return null;
   }
 
-  return process.env.ADMIN_SESSION_SECRET ?? `${adminEmail}:${adminPassword}`;
+  return {
+    adminEmail: normalizeAdminEmail(adminEmail),
+    adminPassword,
+    sessionSecret,
+  };
 }
 
 function toBase64Url(value: string) {
@@ -52,25 +61,26 @@ export function getAdminSessionCookieOptions() {
 }
 
 export function areAdminCredentialsValid(email: unknown, password: unknown) {
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPassword = process.env.ADMIN_PASSWORD;
+  const config = getAdminAuthConfig();
 
   if (
     typeof email !== "string" ||
     typeof password !== "string" ||
-    !adminEmail ||
-    !adminPassword
+    !config
   ) {
     return false;
   }
 
-  return safeEqual(email, adminEmail) && safeEqual(password, adminPassword);
+  return (
+    safeEqual(normalizeAdminEmail(email), config.adminEmail) &&
+    safeEqual(password, config.adminPassword)
+  );
 }
 
 export function createAdminSessionValue() {
-  const secret = getSessionSecret();
+  const config = getAdminAuthConfig();
 
-  if (!secret) {
+  if (!config) {
     return null;
   }
 
@@ -79,7 +89,7 @@ export function createAdminSessionValue() {
     sub: "admin",
   });
   const encodedPayload = toBase64Url(payload);
-  const signature = signValue(encodedPayload, secret);
+  const signature = signValue(encodedPayload, config.sessionSecret);
 
   return `${encodedPayload}.${signature}`;
 }
@@ -89,9 +99,9 @@ export function isAdminSessionValueValid(value: string | undefined) {
     return false;
   }
 
-  const secret = getSessionSecret();
+  const config = getAdminAuthConfig();
 
-  if (!secret) {
+  if (!config) {
     return false;
   }
 
@@ -101,7 +111,7 @@ export function isAdminSessionValueValid(value: string | undefined) {
     return false;
   }
 
-  const expectedSignature = signValue(encodedPayload, secret);
+  const expectedSignature = signValue(encodedPayload, config.sessionSecret);
 
   if (!safeEqual(signature, expectedSignature)) {
     return false;
