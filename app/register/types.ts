@@ -19,6 +19,9 @@ export type RegisterFormState = {
   fieldErrors: Partial<Record<RegisterFieldName, string>>;
 };
 
+export type DuplicateRegistrationStatus = "created" | "duplicate";
+export const REGISTRATION_HONEYPOT_FIELD = "website";
+
 export const EMPTY_REGISTRATION_FORM_VALUES: RegistrationFormValues = {
   firstName: "",
   lastName: "",

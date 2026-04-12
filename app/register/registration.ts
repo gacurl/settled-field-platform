@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import {
   EMPTY_REGISTRATION_FORM_VALUES,
+  REGISTRATION_HONEYPOT_FIELD,
   type RegisterFormState,
   type RegistrationDraft,
   type RegistrationFormValues,
@@ -89,6 +90,12 @@ export function validateRegistrationValues(
   }
 
   return fieldErrors;
+}
+
+export function isHoneypotSubmission(formData: FormData) {
+  const honeypotValue = formData.get(REGISTRATION_HONEYPOT_FIELD);
+
+  return typeof honeypotValue === "string" && honeypotValue.trim().length > 0;
 }
 
 export function buildRegistrationDraft(
