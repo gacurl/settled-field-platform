@@ -1,18 +1,19 @@
 import { NextResponse } from "next/server";
 import {
-  areAdminCredentialsValid,
   createAdminSessionValue,
   getAdminSessionCookieName,
   getAdminSessionCookieOptions,
 } from "@/lib/admin-auth";
+import { authenticateAdminUser } from "@/lib/admin-user-store";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
+  const adminUser = await authenticateAdminUser(email, password);
 
-  if (areAdminCredentialsValid(email, password)) {
-    const sessionValue = createAdminSessionValue();
+  if (adminUser) {
+    const sessionValue = createAdminSessionValue(adminUser.normalizedEmail);
 
     if (!sessionValue) {
       return new Response("Unauthorized", { status: 401 });

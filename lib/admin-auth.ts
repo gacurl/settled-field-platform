@@ -3,24 +3,14 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 const ADMIN_SESSION_COOKIE = "admin_session";
 const ADMIN_SESSION_DURATION_SECONDS = 60 * 60 * 8;
 
-function normalizeAdminEmail(value: string) {
-  return value.trim().toLowerCase();
-}
-
-function getAdminAuthConfig() {
-  const adminEmail = process.env.ADMIN_EMAIL?.trim();
-  const adminPassword = process.env.ADMIN_PASSWORD;
+function getAdminSessionSecret() {
   const sessionSecret = process.env.ADMIN_SESSION_SECRET?.trim();
 
-  if (!adminEmail || !adminPassword || !sessionSecret) {
+  if (!sessionSecret) {
     return null;
   }
 
-  return {
-    adminEmail: normalizeAdminEmail(adminEmail),
-    adminPassword,
-    sessionSecret,
-  };
+  return sessionSecret;
 }
 
 function toBase64Url(value: string) {
@@ -60,61 +50,44 @@ export function getAdminSessionCookieOptions() {
   };
 }
 
-export function areAdminCredentialsValid(email: unknown, password: unknown) {
-  const config = getAdminAuthConfig();
+export function createAdminSessionValue(subject: string) {
+  const sessionSecret = getAdminSessionSecret();
 
-  if (
-    typeof email !== "string" ||
-    typeof password !== "string" ||
-    !config
-  ) {
-    return false;
-  }
-
-  return (
-    safeEqual(normalizeAdminEmail(email), config.adminEmail) &&
-    safeEqual(password, config.adminPassword)
-  );
-}
-
-export function createAdminSessionValue() {
-  const config = getAdminAuthConfig();
-
-  if (!config) {
+  if (!sessionSecret || !subject) {
     return null;
   }
 
   const payload = JSON.stringify({
     exp: Date.now() + ADMIN_SESSION_DURATION_SECONDS * 1000,
-    sub: "admin",
+    sub: subject,
   });
   const encodedPayload = toBase64Url(payload);
-  const signature = signValue(encodedPayload, config.sessionSecret);
+  const signature = signValue(encodedPayload, sessionSecret);
 
   return `${encodedPayload}.${signature}`;
 }
 
-export function isAdminSessionValueValid(value: string | undefined) {
+export function getAdminSessionSubject(value: string | undefined) {
   if (!value) {
-    return false;
+    return null;
   }
 
-  const config = getAdminAuthConfig();
+  const sessionSecret = getAdminSessionSecret();
 
-  if (!config) {
-    return false;
+  if (!sessionSecret) {
+    return null;
   }
 
   const [encodedPayload, signature] = value.split(".");
 
   if (!encodedPayload || !signature) {
-    return false;
+    return null;
   }
 
-  const expectedSignature = signValue(encodedPayload, config.sessionSecret);
+  const expectedSignature = signValue(encodedPayload, sessionSecret);
 
   if (!safeEqual(signature, expectedSignature)) {
-    return false;
+    return null;
   }
 
   try {
@@ -123,8 +96,16 @@ export function isAdminSessionValueValid(value: string | undefined) {
       sub?: string;
     };
 
-    return payload.sub === "admin" && typeof payload.exp === "number" && payload.exp > Date.now();
+    if (typeof payload.exp !== "number" || payload.exp <= Date.now()) {
+      return null;
+    }
+
+    return typeof payload.sub === "string" && payload.sub ? payload.sub : null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+export function isAdminSessionValueValid(value: string | undefined) {
+  return getAdminSessionSubject(value) !== null;
 }

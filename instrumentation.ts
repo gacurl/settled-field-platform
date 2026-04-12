@@ -3,6 +3,7 @@ export async function register() {
     return;
   }
 
+  const { initializeAdminUserStore } = await import("@/lib/admin-user-store");
   const { initializeRegistrationEmailStore } = await import(
     "@/lib/registration-email-store"
   );
@@ -10,6 +11,7 @@ export async function register() {
     "@/lib/registration-store"
   );
 
+  await initializeAdminUserStore();
   await initializeRegistrationEmailStore();
   await initializeRegistrationStore();
 }
