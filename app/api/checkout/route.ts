@@ -1,89 +1,54 @@
 import { NextResponse } from "next/server";
-import {
-  buildRegistrationDraft,
-  REGISTRATION_DRAFT_COOKIE,
-  getRegistrationDraftCookieOptions,
-  hasCheckoutReadyDraft,
-  normalizeRegistrationValues,
-  readRegistrationDraft,
-  serializeRegistrationDraft,
-} from "@/app/register/registration";
-import { EMPTY_REGISTRATION_FORM_VALUES } from "@/app/register/types";
-import { getStripeCheckoutConfig, buildStripeCheckoutSessionPayload } from "@/lib/stripe-checkout";
+import { createStripeClient } from "@/app/lib/stripe";
+import { getStripeCheckoutConfig } from "@/lib/stripe-checkout";
 
-function redirectToRegister(request: Request, search: Record<string, string>) {
-  const url = new URL("/register", request.url);
+type CheckoutRequestBody = {
+  email?: unknown;
+};
 
-  for (const [key, value] of Object.entries(search)) {
-    url.searchParams.set(key, value);
-  }
+export async function POST(req: Request) {
+  try {
+    const body = (await req.json()) as CheckoutRequestBody;
+    const email =
+      typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
 
-  return NextResponse.redirect(url, 303);
-}
-
-export async function POST(request: Request) {
-  const formData = await request.formData();
-  const submittedRegistrationFields = Object.keys(
-    EMPTY_REGISTRATION_FORM_VALUES,
-  ).some((fieldName) => formData.has(fieldName));
-  const submittedValues = normalizeRegistrationValues(formData);
-  const submittedDraft = hasCheckoutReadyDraft(submittedValues)
-    ? buildRegistrationDraft(submittedValues)
-    : null;
-
-  if (submittedRegistrationFields && !submittedDraft) {
-    return redirectToRegister(request, {
-      error: "draft",
-      step: "payment",
-    });
-  }
-
-  const existingDraft = await readRegistrationDraft();
-  const draft = submittedDraft ?? existingDraft;
-
-  if (!draft || !hasCheckoutReadyDraft(draft)) {
-    return redirectToRegister(request, {
-      error: "draft",
-      step: "payment",
-    });
-  }
-
-  const stripeConfig = getStripeCheckoutConfig();
-
-  if (!stripeConfig) {
-    const response = redirectToRegister(request, {
-      mode: "stub",
-      step: "payment",
-    });
-
-    if (submittedDraft) {
-      response.cookies.set(
-        REGISTRATION_DRAFT_COOKIE,
-        serializeRegistrationDraft(submittedDraft),
-        getRegistrationDraftCookieOptions(),
+    if (!email) {
+      return NextResponse.json(
+        { error: "A registration email is required to start checkout." },
+        { status: 400 },
       );
     }
 
-    return response;
-  }
+    const config = getStripeCheckoutConfig();
 
-  const sessionPayload = buildStripeCheckoutSessionPayload(draft, stripeConfig);
-  void sessionPayload;
-  // Stripe session creation is intentionally deferred until real credentials
-  // and the SDK are introduced in a later issue.
+    if (!config) {
+      return NextResponse.json(
+        { error: "Stripe checkout is not configured for this environment." },
+        { status: 503 },
+      );
+    }
 
-  const response = redirectToRegister(request, {
-    mode: "stripe-ready",
-    step: "payment",
-  });
+    const stripe = createStripeClient(config.secretKey);
 
-  if (submittedDraft) {
-    response.cookies.set(
-      REGISTRATION_DRAFT_COOKIE,
-      serializeRegistrationDraft(submittedDraft),
-      getRegistrationDraftCookieOptions(),
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: [
+        {
+          price: config.priceId,
+          quantity: 1,
+        },
+      ],
+      customer_email: email,
+      success_url: `${config.appUrl}/confirmation?mode=checkout`,
+      cancel_url: `${config.appUrl}/register/success`,
+    });
+
+    return NextResponse.json({ url: session.url });
+  } catch (err) {
+    console.error("Stripe checkout error:", err);
+    return NextResponse.json(
+      { error: "Unable to create checkout session." },
+      { status: 500 },
     );
   }
-
-  return response;
 }
