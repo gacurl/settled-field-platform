@@ -25,7 +25,7 @@ export default async function AdminLoginPage({
         <p className="admin-login-card__eyebrow">Admin</p>
         <h1 className="admin-login-card__title">Sign in to continue.</h1>
         <p className="admin-login-card__lede">
-          Use the configured admin credentials to access the protected control
+          Use your admin account credentials to access the protected control
           area.
         </p>
 

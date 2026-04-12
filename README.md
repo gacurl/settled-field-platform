@@ -20,6 +20,14 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Admin Bootstrap
+
+Set `DATABASE_URL` and `ADMIN_SESSION_SECRET`, then create admin users with:
+
+```bash
+npm run admin:create-user -- --email admin@example.com --password 'change-me'
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

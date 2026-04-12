@@ -28,7 +28,7 @@ export default function AdminPage() {
         </div>
         <div className="admin-summary__item">
           <p className="admin-summary__label">Operator model</p>
-          <p className="admin-summary__value">Single admin</p>
+          <p className="admin-summary__value">Small team</p>
         </div>
         <div className="admin-summary__item">
           <p className="admin-summary__label">Current phase</p>
