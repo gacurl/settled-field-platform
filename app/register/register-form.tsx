@@ -6,6 +6,7 @@ import type {
   RegisterFormState,
   RegistrationFormValues,
 } from "./types";
+import { REGISTRATION_HONEYPOT_FIELD } from "./types";
 
 const INITIAL_STATE: RegisterFormState = {
   fieldErrors: {},
@@ -101,6 +102,22 @@ export function RegisterForm({
 
   return (
     <form action={formAction} className="register-form">
+      <div
+        aria-hidden="true"
+        className="register-honeypot"
+      >
+        <label htmlFor={REGISTRATION_HONEYPOT_FIELD}>
+          Leave this field empty
+        </label>
+        <input
+          autoComplete="off"
+          id={REGISTRATION_HONEYPOT_FIELD}
+          name={REGISTRATION_HONEYPOT_FIELD}
+          tabIndex={-1}
+          type="text"
+        />
+      </div>
+
       <p className="register-form__required-note">
         Required fields are marked with *
       </p>
