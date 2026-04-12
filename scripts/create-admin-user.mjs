@@ -70,9 +70,21 @@ async function main() {
         normalized_email TEXT PRIMARY KEY,
         email TEXT NOT NULL,
         password_hash TEXT NOT NULL,
+        is_active BOOLEAN NOT NULL DEFAULT TRUE,
         role TEXT NOT NULL DEFAULT 'admin',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
+    );
+
+    await client.query(
+      `ALTER TABLE ${ADMIN_USERS_TABLE}
+       ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE`,
+    );
+
+    await client.query(
+      `UPDATE ${ADMIN_USERS_TABLE}
+       SET is_active = TRUE
+       WHERE is_active IS NULL`,
     );
 
     await client.query(
@@ -138,11 +150,13 @@ async function main() {
         normalized_email,
         email,
         password_hash,
+        is_active,
         role
-      ) VALUES ($1, $2, $3, $4)
+      ) VALUES ($1, $2, $3, TRUE, $4)
       ON CONFLICT (normalized_email) DO UPDATE
         SET email = EXCLUDED.email,
             password_hash = EXCLUDED.password_hash,
+            is_active = EXCLUDED.is_active,
             role = EXCLUDED.role`,
       [normalizedEmail, email.trim(), passwordHash, role],
     );
