@@ -323,9 +323,132 @@ a {
   padding-top: var(--space-6);
 }
 
+.confirmation-page {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+.confirmation-page__intro {
+  max-width: 42rem;
+  margin-bottom: var(--space-8);
+}
+
+.confirmation-page__eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.confirmation-page__title {
+  margin: 0 0 var(--space-4);
+  color: var(--color-primary);
+  max-width: 34rem;
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.confirmation-page__lede {
+  max-width: 40rem;
+  margin: 0;
+  color: var(--color-accent);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.confirmation-status,
+.confirmation-section,
+.confirmation-actions {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.confirmation-status {
+  max-width: 40rem;
+  margin-top: var(--space-6);
+}
+
+.confirmation-status__title {
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.confirmation-status__body,
+.confirmation-section p,
+.confirmation-section li,
+.confirmation-actions p {
+  color: var(--color-accent);
+  line-height: 1.5;
+}
+
+.confirmation-status__body,
+.confirmation-section p,
+.confirmation-section ol,
+.confirmation-actions p {
+  margin: 0;
+}
+
+.confirmation-page__grid {
+  display: grid;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.confirmation-section h2,
+.confirmation-actions h2 {
+  margin: 0 0 0.75rem;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.confirmation-list {
+  display: grid;
+  gap: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.confirmation-section__note {
+  padding-top: var(--space-6);
+}
+
+.confirmation-actions__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+}
+
+.confirmation-actions__primary,
+.confirmation-actions__secondary {
+  display: inline-block;
+  min-height: 3.25rem;
+  padding: var(--space-4) var(--space-6);
+  line-height: 1.2;
+}
+
+.confirmation-actions__primary {
+  background: var(--color-primary);
+  color: var(--color-background);
+}
+
+.confirmation-actions__secondary {
+  background: var(--color-background);
+  color: var(--color-primary);
+}
+
 @media (min-width: 64rem) {
   .register-page__grid {
     grid-template-columns: minmax(0, 1.7fr) minmax(18rem, 1fr);
+    align-items: start;
+  }
+
+  .confirmation-page__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
   }
 }
@@ -340,7 +463,15 @@ a {
     margin-bottom: var(--space-6);
   }
 
+  .confirmation-page__intro {
+    margin-bottom: var(--space-6);
+  }
+
   .register-page__title {
+    font-size: 2.125rem;
+  }
+
+  .confirmation-page__title {
     font-size: 2.125rem;
   }
 
@@ -353,6 +484,11 @@ a {
   }
 
   .register-cta__button {
+    width: 100%;
+  }
+
+  .confirmation-actions__primary,
+  .confirmation-actions__secondary {
     width: 100%;
   }
 }
