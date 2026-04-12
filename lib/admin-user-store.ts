@@ -11,6 +11,7 @@ let adminUsersTablePromise: Promise<void> | null = null;
 type AdminUserRow = {
   created_at: string;
   email: string;
+  is_active: boolean;
   normalized_email: string;
   password_hash: string;
   role: string;
@@ -23,6 +24,7 @@ export type AdminUserRole = (typeof ADMIN_USER_ROLES)[number];
 export type AdminUserRecord = {
   createdAt: string;
   email: string;
+  isActive: boolean;
   normalizedEmail: string;
   passwordHash: string;
   role: AdminUserRole;
@@ -39,9 +41,14 @@ function mapAdminUserRow(row: AdminUserRow): AdminUserRecord {
     throw new Error(`Invalid admin user role for ${row.normalized_email}`);
   }
 
+  if (typeof row.is_active !== "boolean") {
+    throw new Error(`Invalid admin user status for ${row.normalized_email}`);
+  }
+
   return {
     createdAt: row.created_at,
     email: row.email,
+    isActive: row.is_active,
     normalizedEmail: row.normalized_email,
     passwordHash: row.password_hash,
     role,
@@ -108,9 +115,23 @@ export async function initializeAdminUserStore() {
         normalized_email TEXT PRIMARY KEY,
         email TEXT NOT NULL,
         password_hash TEXT NOT NULL,
+        is_active BOOLEAN NOT NULL DEFAULT TRUE,
         role TEXT NOT NULL DEFAULT 'admin',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`)
+      .then(() =>
+        getDb().query(
+          `ALTER TABLE ${ADMIN_USERS_TABLE}
+           ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE`,
+        ),
+      )
+      .then(() =>
+        getDb().query(
+          `UPDATE ${ADMIN_USERS_TABLE}
+           SET is_active = TRUE
+           WHERE is_active IS NULL`,
+        ),
+      )
       .then(() =>
         getDb().query(
           `ALTER TABLE ${ADMIN_USERS_TABLE}
@@ -157,6 +178,7 @@ export async function findAdminUserByNormalizedEmail(
     `SELECT
       normalized_email,
       email,
+      is_active,
       password_hash,
       role,
       created_at
@@ -189,6 +211,10 @@ export async function authenticateAdminUser(
   const adminUser = await findAdminUserByNormalizedEmail(normalizedEmail);
 
   if (!adminUser) {
+    return null;
+  }
+
+  if (!adminUser.isActive) {
     return null;
   }
 
@@ -226,15 +252,18 @@ export async function upsertAdminUser({
       normalized_email,
       email,
       password_hash,
+      is_active,
       role
-    ) VALUES ($1, $2, $3, $4)
+    ) VALUES ($1, $2, $3, TRUE, $4)
     ON CONFLICT (normalized_email) DO UPDATE
       SET email = EXCLUDED.email,
           password_hash = EXCLUDED.password_hash,
+          is_active = EXCLUDED.is_active,
           role = EXCLUDED.role
     RETURNING
       normalized_email,
       email,
+      is_active,
       password_hash,
       role,
       created_at`,
@@ -249,6 +278,7 @@ export async function getOwnerAdminUser(): Promise<AdminUserRecord | null> {
     `SELECT
       normalized_email,
       email,
+      is_active,
       password_hash,
       role,
       created_at
@@ -260,6 +290,102 @@ export async function getOwnerAdminUser(): Promise<AdminUserRecord | null> {
 
   if (result.rowCount !== 1) {
     return null;
+  }
+
+  return mapAdminUserRow(result.rows[0]);
+}
+
+export async function listAdminUsers(): Promise<AdminUserRecord[]> {
+  const result = await getDb().query<AdminUserRow>(
+    `SELECT
+      normalized_email,
+      email,
+      is_active,
+      password_hash,
+      role,
+      created_at
+     FROM ${ADMIN_USERS_TABLE}
+     ORDER BY
+      CASE role WHEN 'owner' THEN 0 ELSE 1 END,
+      created_at ASC`,
+  );
+
+  return result.rows.map(mapAdminUserRow);
+}
+
+export async function createHelperAdminUser({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  const normalizedEmail = normalizeAdminEmail(email);
+
+  if (!normalizedEmail) {
+    throw new Error("Helper email is required");
+  }
+
+  if (!password) {
+    throw new Error("Helper password is required");
+  }
+
+  const existingUser = await findAdminUserByNormalizedEmail(normalizedEmail);
+
+  if (existingUser) {
+    throw new Error("That email already has access");
+  }
+
+  return upsertAdminUser({
+    email,
+    password,
+    role: "admin",
+  });
+}
+
+async function countActiveOwners() {
+  const result = await getDb().query<{ total: string }>(
+    `SELECT COUNT(*)::text AS total
+     FROM ${ADMIN_USERS_TABLE}
+     WHERE role = 'owner' AND is_active = TRUE`,
+  );
+
+  return Number(result.rows[0]?.total ?? "0");
+}
+
+export async function disableAdminUser(
+  normalizedEmail: string,
+): Promise<AdminUserRecord> {
+  const adminUser = await findAdminUserByNormalizedEmail(normalizedEmail);
+
+  if (!adminUser) {
+    throw new Error("Admin user not found");
+  }
+
+  if (!adminUser.isActive) {
+    return adminUser;
+  }
+
+  if (adminUser.role === "owner" && (await countActiveOwners()) <= 1) {
+    throw new Error("Keep at least one active owner");
+  }
+
+  const result = await getDb().query<AdminUserRow>(
+    `UPDATE ${ADMIN_USERS_TABLE}
+     SET is_active = FALSE
+     WHERE normalized_email = $1
+     RETURNING
+      normalized_email,
+      email,
+      is_active,
+      password_hash,
+      role,
+      created_at`,
+    [normalizedEmail],
+  );
+
+  if (result.rowCount !== 1) {
+    throw new Error("Admin user not found");
   }
 
   return mapAdminUserRow(result.rows[0]);

@@ -18,8 +18,16 @@ async function getCurrentAdminUser(): Promise<AdminUserRecord | null> {
     return null;
   }
 
-  return await findAdminUserByNormalizedEmail(subject);
+  const adminUser = await findAdminUserByNormalizedEmail(subject);
+
+  if (!adminUser?.isActive) {
+    return null;
+  }
+
+  return adminUser;
 }
+
+export { getCurrentAdminUser };
 
 export async function isAdminAuthenticated() {
   return (await getCurrentAdminUser()) !== null;

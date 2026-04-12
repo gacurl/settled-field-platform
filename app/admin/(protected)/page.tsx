@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { isCurrentAdminOwner } from "@/lib/admin-auth-server";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const isOwner = await isCurrentAdminOwner();
+
   return (
     <section className="admin-page">
       <section className="admin-hero">
@@ -48,6 +51,20 @@ export default function AdminPage() {
             View Attendees
           </Link>
         </section>
+
+        {isOwner ? (
+          <section className="admin-card">
+            <p className="admin-card__eyebrow">Team access</p>
+            <h2 className="admin-card__title">Helper account management</h2>
+            <p className="admin-card__body">
+              Add helper accounts, review current access, and disable sign-in
+              when someone should no longer use the admin area.
+            </p>
+            <Link className="admin-card__link" href="/admin/users">
+              Manage Team Access
+            </Link>
+          </section>
+        ) : null}
 
         <section className="admin-card">
           <p className="admin-card__eyebrow">Speakers</p>
