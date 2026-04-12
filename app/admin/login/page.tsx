@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { isAdminAuthenticated } from "@/lib/admin-auth-server";
 
@@ -62,6 +63,12 @@ export default async function AdminLoginPage({
             Sign In
           </button>
         </form>
+
+        <p className="admin-request-access__links">
+          <Link className="admin-link-button" href="/admin/request-access">
+            Request admin access
+          </Link>
+        </p>
       </div>
     </section>
   );

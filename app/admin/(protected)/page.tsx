@@ -63,6 +63,10 @@ export default async function AdminPage() {
             <Link className="admin-card__link" href="/admin/users">
               Manage Team Access
             </Link>
+            <br />
+            <Link className="admin-card__link" href="/admin/requests">
+              Review Access Requests
+            </Link>
           </section>
         ) : null}
 
