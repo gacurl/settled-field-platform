@@ -2,7 +2,7 @@ import { randomBytes, scrypt as nodeScrypt, timingSafeEqual } from "node:crypto"
 import { promisify } from "node:util";
 import { getDb } from "@/lib/db";
 
-const ADMIN_USERS_TABLE = "admin_users";
+export const ADMIN_USERS_TABLE = "admin_users";
 const SCRYPT_KEY_LENGTH = 64;
 const scrypt = promisify(nodeScrypt);
 
@@ -76,7 +76,7 @@ function getStoredHashParts(passwordHash: string) {
   };
 }
 
-async function hashPassword(password: string) {
+export async function createAdminPasswordHash(password: string) {
   const salt = randomBytes(16).toString("hex");
   const derivedKey = (await scrypt(
     password,
@@ -246,7 +246,7 @@ export async function upsertAdminUser({
     throw new Error("Admin role must be owner or admin");
   }
 
-  const passwordHash = await hashPassword(password);
+  const passwordHash = await createAdminPasswordHash(password);
   const result = await getDb().query<AdminUserRow>(
     `INSERT INTO ${ADMIN_USERS_TABLE} (
       normalized_email,
