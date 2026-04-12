@@ -390,3 +390,36 @@ export async function disableAdminUser(
 
   return mapAdminUserRow(result.rows[0]);
 }
+
+export async function removeAdminUser(
+  normalizedEmail: string,
+): Promise<AdminUserRecord> {
+  const adminUser = await findAdminUserByNormalizedEmail(normalizedEmail);
+
+  if (!adminUser) {
+    throw new Error("Admin user not found");
+  }
+
+  if (adminUser.role === "owner" && adminUser.isActive && (await countActiveOwners()) <= 1) {
+    throw new Error("Keep at least one active owner");
+  }
+
+  const result = await getDb().query<AdminUserRow>(
+    `DELETE FROM ${ADMIN_USERS_TABLE}
+     WHERE normalized_email = $1
+     RETURNING
+      normalized_email,
+      email,
+      is_active,
+      password_hash,
+      role,
+      created_at`,
+    [normalizedEmail],
+  );
+
+  if (result.rowCount !== 1) {
+    throw new Error("Admin user not found");
+  }
+
+  return mapAdminUserRow(result.rows[0]);
+}

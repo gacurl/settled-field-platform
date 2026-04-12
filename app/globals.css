@@ -678,6 +678,10 @@ a {
   cursor: pointer;
 }
 
+.admin-button--danger {
+  background: #6e1f1f;
+}
+
 .admin-link-button,
 .admin-card__link {
   display: inline-block;
@@ -791,6 +795,10 @@ a {
   color: var(--color-primary);
 }
 
+.admin-panel--warning {
+  max-width: 48rem;
+}
+
 .admin-attendees {
   padding-top: var(--space-6);
   border-top: 1px solid var(--color-border);
@@ -849,6 +857,13 @@ a {
   margin: 0;
 }
 
+.admin-users__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
 .admin-users__disable-button {
   border: 0;
   padding: 0;
@@ -856,9 +871,20 @@ a {
   cursor: pointer;
 }
 
+.admin-users__remove-link {
+  color: #6e1f1f;
+}
+
 .admin-users__disable-button:disabled {
   color: var(--color-accent);
   cursor: default;
+}
+
+.admin-users__confirmation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
 }
 
 .admin-users__action-note {

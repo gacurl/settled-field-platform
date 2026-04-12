@@ -13,6 +13,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 type AdminUsersPageProps = {
   searchParams?: Promise<{
+    confirmRemove?: string;
     error?: string;
     status?: string;
   }>;
@@ -55,7 +56,19 @@ function getFeedbackCopy(status?: string, error?: string) {
     };
   }
 
-  if (error === "invalid" || error === "disable-invalid") {
+  if (status === "user-removed") {
+    return {
+      tone: "status",
+      title: "User removed",
+      body: "That account has been removed permanently.",
+    };
+  }
+
+  if (
+    error === "invalid" ||
+    error === "disable-invalid" ||
+    error === "remove-invalid"
+  ) {
     return {
       tone: "error",
       title: "That action could not be completed",
@@ -86,6 +99,14 @@ export default async function AdminUsersPage({
     resolvedSearchParams?.status,
     resolvedSearchParams?.error,
   );
+  const pendingRemoveEmail = resolvedSearchParams?.confirmRemove ?? null;
+  const pendingRemoveUser = pendingRemoveEmail
+    ? adminUsers.find((user) => user.normalizedEmail === pendingRemoveEmail) ?? null
+    : null;
+  const pendingRemoveIsLastActiveOwner =
+    pendingRemoveUser?.role === "owner" &&
+    pendingRemoveUser.isActive &&
+    activeOwners.length === 1;
 
   return (
     <section className="admin-page">
@@ -123,6 +144,41 @@ export default async function AdminUsersPage({
         <section className={`admin-panel admin-panel--${feedback.tone}`}>
           <h2>{feedback.title}</h2>
           <p>{feedback.body}</p>
+        </section>
+      ) : null}
+
+      {pendingRemoveUser ? (
+        <section className="admin-panel admin-panel--warning">
+          <h2>Remove user</h2>
+          <p>
+            Remove access permanently for <strong>{pendingRemoveUser.email}</strong>.
+            This cannot be undone from the app.
+          </p>
+          {pendingRemoveIsLastActiveOwner ? (
+            <p>Keep one owner active before removing this account.</p>
+          ) : (
+            <form action="/api/admin/users/remove" method="post">
+              <input
+                type="hidden"
+                name="normalizedEmail"
+                value={pendingRemoveUser.normalizedEmail}
+              />
+              <input type="hidden" name="confirmation" value="remove" />
+              <div className="admin-users__confirmation-actions">
+                <button className="admin-button admin-button--danger" type="submit">
+                  Remove access permanently
+                </button>
+                <Link className="admin-link-button" href="/admin/users">
+                  Cancel
+                </Link>
+              </div>
+            </form>
+          )}
+        </section>
+      ) : pendingRemoveEmail ? (
+        <section className="admin-panel admin-panel--error">
+          <h2>That action could not be completed</h2>
+          <p>The selected user could not be found.</p>
         </section>
       ) : null}
 
@@ -191,6 +247,9 @@ export default async function AdminUsersPage({
                   adminUser.role === "owner" &&
                   adminUser.isActive &&
                   activeOwners.length === 1;
+                const removeHref = `/admin/users?confirmRemove=${encodeURIComponent(
+                  adminUser.normalizedEmail,
+                )}`;
 
                 return (
                   <tr key={adminUser.normalizedEmail}>
@@ -209,12 +268,8 @@ export default async function AdminUsersPage({
                     </td>
                     <td>{formatCreatedAt(adminUser.createdAt)}</td>
                     <td>
-                      {adminUser.isActive ? (
-                        isLastActiveOwner ? (
-                          <span className="admin-users__action-note">
-                            Keep active
-                          </span>
-                        ) : (
+                      <div className="admin-users__actions">
+                        {adminUser.isActive ? (
                           <form
                             action="/api/admin/users/disable"
                             method="post"
@@ -228,18 +283,33 @@ export default async function AdminUsersPage({
                             <button
                               className="admin-link-button admin-users__disable-button"
                               type="submit"
-                              disabled={
-                                currentAdminUser?.normalizedEmail ===
-                                  adminUser.normalizedEmail && isLastActiveOwner
-                              }
                             >
                               Disable
                             </button>
                           </form>
-                        )
-                      ) : (
-                        <span className="admin-users__action-note">Disabled</span>
-                      )}
+                        ) : (
+                          <span className="admin-users__action-note">Disabled</span>
+                        )}
+
+                        {isLastActiveOwner ? (
+                          <span className="admin-users__action-note">
+                            Keep owner
+                          </span>
+                        ) : (
+                          <Link
+                            className="admin-link-button admin-users__remove-link"
+                            href={removeHref}
+                          >
+                            Remove user
+                          </Link>
+                        )}
+
+                        {currentAdminUser?.normalizedEmail === adminUser.normalizedEmail ? (
+                          <span className="admin-users__action-note">
+                            Signed in now
+                          </span>
+                        ) : null}
+                      </div>
                     </td>
                   </tr>
                 );
