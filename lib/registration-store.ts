@@ -8,6 +8,14 @@ const REGISTRATIONS_TABLE = "registrations";
 const REGISTRATION_EMAILS_TABLE = "registration_emails";
 let registrationsTablePromise: Promise<void> | null = null;
 
+export type RegistrationRecord = {
+  createdAt: string;
+  email: string;
+  fullName: string;
+  normalizedEmail: string;
+  organizationOrAffiliation: string | null;
+};
+
 function buildFullName(values: RegistrationFormValues) {
   return `${values.firstName} ${values.lastName}`.trim();
 }
@@ -77,4 +85,31 @@ export async function createRegistration(
   } finally {
     client.release();
   }
+}
+
+export async function listRegistrations(): Promise<RegistrationRecord[]> {
+  const result = await getDb().query<{
+    created_at: string;
+    email: string;
+    full_name: string;
+    normalized_email: string;
+    organization_or_affiliation: string | null;
+  }>(
+    `SELECT
+      full_name,
+      email,
+      normalized_email,
+      organization_or_affiliation,
+      created_at
+     FROM ${REGISTRATIONS_TABLE}
+     ORDER BY created_at DESC`,
+  );
+
+  return result.rows.map((row) => ({
+    createdAt: row.created_at,
+    email: row.email,
+    fullName: row.full_name,
+    normalizedEmail: row.normalized_email,
+    organizationOrAffiliation: row.organization_or_affiliation,
+  }));
 }

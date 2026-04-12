@@ -674,6 +674,14 @@ a {
   cursor: pointer;
 }
 
+.admin-link-button,
+.admin-card__link {
+  display: inline-block;
+  color: var(--color-primary);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
 .admin-button--full {
   width: 100%;
 }
@@ -755,6 +763,10 @@ a {
   padding-top: var(--space-6);
 }
 
+.admin-card__link {
+  padding-top: var(--space-6);
+}
+
 .admin-panel {
   max-width: 40rem;
 }
@@ -768,6 +780,40 @@ a {
 
 .admin-panel form {
   margin-top: var(--space-6);
+}
+
+.admin-attendees {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-attendees__table-wrap {
+  overflow-x: auto;
+}
+
+.admin-attendees__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-attendees__table th,
+.admin-attendees__table td {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-attendees__table th {
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.admin-attendees__table td {
+  color: var(--color-accent);
+  line-height: 1.5;
 }
 
 @media (min-width: 64rem) {
