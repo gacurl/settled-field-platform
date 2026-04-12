@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function AdminPage() {
   return (
     <section className="admin-page">
@@ -39,10 +41,12 @@ export default function AdminPage() {
           <p className="admin-card__eyebrow">Attendees</p>
           <h2 className="admin-card__title">Registration oversight</h2>
           <p className="admin-card__body">
-            This area will hold attendee review and status checks once admin
-            data work is added. No live attendee records are loaded yet.
+            View the current registration record and see who has already entered
+            the summit pipeline.
           </p>
-          <p className="admin-card__status">Coming online next</p>
+          <Link className="admin-card__link" href="/admin/attendees">
+            View Attendees
+          </Link>
         </section>
 
         <section className="admin-card">
