@@ -28,6 +28,9 @@ Set `DATABASE_URL` and `ADMIN_SESSION_SECRET`, then create admin users with:
 npm run admin:create-user -- --email admin@example.com --password 'change-me'
 ```
 
+To establish the initial owner deliberately, pass `--role owner`. Omit `--role`
+or pass `--role admin` for helper admins.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

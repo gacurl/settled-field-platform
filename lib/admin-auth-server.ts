@@ -3,17 +3,32 @@ import {
   getAdminSessionSubject,
   getAdminSessionCookieName,
 } from "@/lib/admin-auth";
-import { findAdminUserByNormalizedEmail } from "@/lib/admin-user-store";
+import {
+  type AdminUserRecord,
+  findAdminUserByNormalizedEmail,
+} from "@/lib/admin-user-store";
 
-export async function isAdminAuthenticated() {
+async function getCurrentAdminUser(): Promise<AdminUserRecord | null> {
   const cookieStore = await cookies();
   const subject = getAdminSessionSubject(
     cookieStore.get(getAdminSessionCookieName())?.value,
   );
 
   if (!subject) {
-    return false;
+    return null;
   }
 
-  return (await findAdminUserByNormalizedEmail(subject)) !== null;
+  return await findAdminUserByNormalizedEmail(subject);
+}
+
+export async function isAdminAuthenticated() {
+  return (await getCurrentAdminUser()) !== null;
+}
+
+export async function getCurrentAdminRole() {
+  return (await getCurrentAdminUser())?.role ?? null;
+}
+
+export async function isCurrentAdminOwner() {
+  return (await getCurrentAdminRole()) === "owner";
 }

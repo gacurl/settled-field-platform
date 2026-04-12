@@ -5,6 +5,7 @@ import pg from "pg";
 const { Client } = pg;
 const ADMIN_USERS_TABLE = "admin_users";
 const SCRYPT_KEY_LENGTH = 64;
+const ADMIN_USER_ROLES = new Set(["owner", "admin"]);
 
 function getArgValue(flag) {
   const flagIndex = process.argv.indexOf(flag);
@@ -27,9 +28,20 @@ function hashPassword(password) {
   return `${salt}:${derivedKey.toString("hex")}`;
 }
 
+function parseRole(value) {
+  if (typeof value !== "string") {
+    return "admin";
+  }
+
+  const normalizedValue = value.trim().toLowerCase();
+
+  return ADMIN_USER_ROLES.has(normalizedValue) ? normalizedValue : null;
+}
+
 async function main() {
   const email = getArgValue("--email");
   const password = getArgValue("--password");
+  const role = parseRole(getArgValue("--role"));
   const databaseUrl = process.env.DATABASE_URL;
 
   if (!databaseUrl) {
@@ -44,6 +56,10 @@ async function main() {
     throw new Error("Pass --password with a non-empty admin password");
   }
 
+  if (!role) {
+    throw new Error("Pass --role with owner or admin");
+  }
+
   const client = new Client({ connectionString: databaseUrl });
 
   await client.connect();
@@ -54,26 +70,84 @@ async function main() {
         normalized_email TEXT PRIMARY KEY,
         email TEXT NOT NULL,
         password_hash TEXT NOT NULL,
+        role TEXT NOT NULL DEFAULT 'admin',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       )`,
     );
 
+    await client.query(
+      `ALTER TABLE ${ADMIN_USERS_TABLE}
+       ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'admin'`,
+    );
+
+    await client.query(
+      `UPDATE ${ADMIN_USERS_TABLE}
+       SET role = 'admin'
+       WHERE role IS NULL`,
+    );
+
+    await client.query(
+      `DO $$
+      BEGIN
+        IF NOT EXISTS (
+          SELECT 1
+          FROM pg_constraint
+          WHERE conname = '${ADMIN_USERS_TABLE}_role_check'
+        ) THEN
+          ALTER TABLE ${ADMIN_USERS_TABLE}
+          ADD CONSTRAINT ${ADMIN_USERS_TABLE}_role_check
+          CHECK (role IN ('owner', 'admin'));
+        END IF;
+      END $$;`,
+    );
+
     const normalizedEmail = normalizeEmail(email);
     const passwordHash = hashPassword(password);
+    const existingOwner = await client.query(
+      `SELECT normalized_email
+       FROM ${ADMIN_USERS_TABLE}
+       WHERE role = 'owner'
+       LIMIT 1`,
+    );
+
+    if (
+      role === "owner" &&
+      existingOwner.rowCount === 1 &&
+      existingOwner.rows[0].normalized_email !== normalizedEmail
+    ) {
+      throw new Error("An owner already exists; refusing to create a second owner");
+    }
+
+    const existingUser = await client.query(
+      `SELECT role
+       FROM ${ADMIN_USERS_TABLE}
+       WHERE normalized_email = $1`,
+      [normalizedEmail],
+    );
+
+    if (
+      role === "admin" &&
+      existingUser.rowCount === 1 &&
+      existingUser.rows[0].role === "owner"
+    ) {
+      throw new Error("Refusing to demote the existing owner through this command");
+    }
 
     await client.query(
       `INSERT INTO ${ADMIN_USERS_TABLE} (
         normalized_email,
         email,
-        password_hash
-      ) VALUES ($1, $2, $3)
+        password_hash,
+        role
+      ) VALUES ($1, $2, $3, $4)
       ON CONFLICT (normalized_email) DO UPDATE
         SET email = EXCLUDED.email,
-            password_hash = EXCLUDED.password_hash`,
-      [normalizedEmail, email.trim(), passwordHash],
+            password_hash = EXCLUDED.password_hash,
+            role = EXCLUDED.role`,
+      [normalizedEmail, email.trim(), passwordHash, role],
     );
 
-    console.log(`Admin user ready: ${normalizedEmail}`);
+    console.log(`Admin user ready: ${normalizedEmail} (${role})`);
   } finally {
     await client.end();
   }

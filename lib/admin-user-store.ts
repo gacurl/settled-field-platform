@@ -13,13 +13,19 @@ type AdminUserRow = {
   email: string;
   normalized_email: string;
   password_hash: string;
+  role: string;
 };
+
+export const ADMIN_USER_ROLES = ["owner", "admin"] as const;
+
+export type AdminUserRole = (typeof ADMIN_USER_ROLES)[number];
 
 export type AdminUserRecord = {
   createdAt: string;
   email: string;
   normalizedEmail: string;
   passwordHash: string;
+  role: AdminUserRole;
 };
 
 export function normalizeAdminEmail(value: string) {
@@ -27,12 +33,27 @@ export function normalizeAdminEmail(value: string) {
 }
 
 function mapAdminUserRow(row: AdminUserRow): AdminUserRecord {
+  const role = parseAdminUserRole(row.role);
+
+  if (!role) {
+    throw new Error(`Invalid admin user role for ${row.normalized_email}`);
+  }
+
   return {
     createdAt: row.created_at,
     email: row.email,
     normalizedEmail: row.normalized_email,
     passwordHash: row.password_hash,
+    role,
   };
+}
+
+export function parseAdminUserRole(value: unknown): AdminUserRole | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  return ADMIN_USER_ROLES.find((role) => role === value) ?? null;
 }
 
 function getStoredHashParts(passwordHash: string) {
@@ -83,13 +104,41 @@ async function verifyPassword(password: string, passwordHash: string) {
 export async function initializeAdminUserStore() {
   if (!adminUsersTablePromise) {
     adminUsersTablePromise = getDb()
-      .query(
-        `CREATE TABLE IF NOT EXISTS ${ADMIN_USERS_TABLE} (
-          normalized_email TEXT PRIMARY KEY,
-          email TEXT NOT NULL,
-          password_hash TEXT NOT NULL,
-          created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-        )`,
+      .query(`CREATE TABLE IF NOT EXISTS ${ADMIN_USERS_TABLE} (
+        normalized_email TEXT PRIMARY KEY,
+        email TEXT NOT NULL,
+        password_hash TEXT NOT NULL,
+        role TEXT NOT NULL DEFAULT 'admin',
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )`)
+      .then(() =>
+        getDb().query(
+          `ALTER TABLE ${ADMIN_USERS_TABLE}
+           ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'admin'`,
+        ),
+      )
+      .then(() =>
+        getDb().query(
+          `UPDATE ${ADMIN_USERS_TABLE}
+           SET role = 'admin'
+           WHERE role IS NULL`,
+        ),
+      )
+      .then(() =>
+        getDb().query(
+          `DO $$
+          BEGIN
+            IF NOT EXISTS (
+              SELECT 1
+              FROM pg_constraint
+              WHERE conname = '${ADMIN_USERS_TABLE}_role_check'
+            ) THEN
+              ALTER TABLE ${ADMIN_USERS_TABLE}
+              ADD CONSTRAINT ${ADMIN_USERS_TABLE}_role_check
+              CHECK (role IN ('owner', 'admin'));
+            END IF;
+          END $$;`,
+        ),
       )
       .then(() => undefined)
       .catch((error: unknown) => {
@@ -109,6 +158,7 @@ export async function findAdminUserByNormalizedEmail(
       normalized_email,
       email,
       password_hash,
+      role,
       created_at
      FROM ${ADMIN_USERS_TABLE}
      WHERE normalized_email = $1`,
@@ -150,9 +200,11 @@ export async function authenticateAdminUser(
 export async function upsertAdminUser({
   email,
   password,
+  role,
 }: {
   email: string;
   password: string;
+  role: AdminUserRole;
 }) {
   const normalizedEmail = normalizeAdminEmail(email);
 
@@ -164,23 +216,51 @@ export async function upsertAdminUser({
     throw new Error("Admin password is required");
   }
 
+  if (!parseAdminUserRole(role)) {
+    throw new Error("Admin role must be owner or admin");
+  }
+
   const passwordHash = await hashPassword(password);
   const result = await getDb().query<AdminUserRow>(
     `INSERT INTO ${ADMIN_USERS_TABLE} (
       normalized_email,
       email,
-      password_hash
-    ) VALUES ($1, $2, $3)
+      password_hash,
+      role
+    ) VALUES ($1, $2, $3, $4)
     ON CONFLICT (normalized_email) DO UPDATE
       SET email = EXCLUDED.email,
-          password_hash = EXCLUDED.password_hash
+          password_hash = EXCLUDED.password_hash,
+          role = EXCLUDED.role
     RETURNING
       normalized_email,
       email,
       password_hash,
+      role,
       created_at`,
-    [normalizedEmail, email.trim(), passwordHash],
+    [normalizedEmail, email.trim(), passwordHash, role],
   );
+
+  return mapAdminUserRow(result.rows[0]);
+}
+
+export async function getOwnerAdminUser(): Promise<AdminUserRecord | null> {
+  const result = await getDb().query<AdminUserRow>(
+    `SELECT
+      normalized_email,
+      email,
+      password_hash,
+      role,
+      created_at
+     FROM ${ADMIN_USERS_TABLE}
+     WHERE role = 'owner'
+     ORDER BY created_at ASC
+     LIMIT 1`,
+  );
+
+  if (result.rowCount !== 1) {
+    return null;
+  }
 
   return mapAdminUserRow(result.rows[0]);
 }
