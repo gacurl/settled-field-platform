@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readRegistrationDraft } from "../registration";
+import { CheckoutButton } from "./checkout-button";
 
 export default async function RegisterSuccessPage() {
   const draft = await readRegistrationDraft();
@@ -55,11 +56,7 @@ export default async function RegisterSuccessPage() {
           </p>
         </div>
         <div className="register-success-actions__links">
-          <form action="/api/checkout" method="post">
-            <button className="register-success-actions__primary" type="submit">
-              Continue to Payment
-            </button>
-          </form>
+          <CheckoutButton email={draft.email} />
           <Link className="register-success-actions__secondary" href="/register">
             Edit Registration
           </Link>
