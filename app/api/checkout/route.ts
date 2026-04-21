@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createStripeClient } from "@/app/lib/stripe";
+import { getRegistrationByNormalizedEmail } from "@/lib/registration-store";
 import { getStripeCheckoutConfig } from "@/lib/stripe-checkout";
 
 type CheckoutRequestBody = {
@@ -16,6 +17,15 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: "A registration email is required to start checkout." },
         { status: 400 },
+      );
+    }
+
+    const registration = await getRegistrationByNormalizedEmail(email);
+
+    if (!registration) {
+      return NextResponse.json(
+        { error: "A saved registration is required before checkout can begin." },
+        { status: 404 },
       );
     }
 
@@ -39,6 +49,9 @@ export async function POST(req: Request) {
         },
       ],
       customer_email: email,
+      metadata: {
+        registration_email: registration.normalizedEmail,
+      },
       success_url: `${config.appUrl}/confirmation?mode=checkout`,
       cancel_url: `${config.appUrl}/register/success`,
     });

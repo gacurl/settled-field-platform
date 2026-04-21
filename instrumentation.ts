@@ -13,9 +13,11 @@ export async function register() {
   const { initializeRegistrationStore } = await import(
     "@/lib/registration-store"
   );
+  const { initializePaymentStore } = await import("@/lib/payment-store");
 
   await initializeAdminAccessRequestStore();
   await initializeAdminUserStore();
   await initializeRegistrationEmailStore();
   await initializeRegistrationStore();
+  await initializePaymentStore();
 }
