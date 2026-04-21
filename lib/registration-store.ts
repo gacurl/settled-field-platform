@@ -16,6 +16,14 @@ export type RegistrationRecord = {
   organizationOrAffiliation: string | null;
 };
 
+type RegistrationRow = {
+  created_at: string;
+  email: string;
+  full_name: string;
+  normalized_email: string;
+  organization_or_affiliation: string | null;
+};
+
 function buildFullName(values: RegistrationFormValues) {
   return `${values.firstName} ${values.lastName}`.trim();
 }
@@ -88,13 +96,7 @@ export async function createRegistration(
 }
 
 export async function listRegistrations(): Promise<RegistrationRecord[]> {
-  const result = await getDb().query<{
-    created_at: string;
-    email: string;
-    full_name: string;
-    normalized_email: string;
-    organization_or_affiliation: string | null;
-  }>(
+  const result = await getDb().query<RegistrationRow>(
     `SELECT
       full_name,
       email,
@@ -105,11 +107,37 @@ export async function listRegistrations(): Promise<RegistrationRecord[]> {
      ORDER BY created_at DESC`,
   );
 
-  return result.rows.map((row) => ({
+  return result.rows.map(mapRegistrationRow);
+}
+
+export async function getRegistrationByNormalizedEmail(normalizedEmail: string) {
+  const normalizedRegistrationEmail = normalizedEmail.trim().toLowerCase();
+
+  if (!normalizedRegistrationEmail) {
+    return null;
+  }
+
+  const result = await getDb().query<RegistrationRow>(
+    `SELECT
+      full_name,
+      email,
+      normalized_email,
+      organization_or_affiliation,
+      created_at
+     FROM ${REGISTRATIONS_TABLE}
+     WHERE normalized_email = $1`,
+    [normalizedRegistrationEmail],
+  );
+
+  return result.rows[0] ? mapRegistrationRow(result.rows[0]) : null;
+}
+
+function mapRegistrationRow(row: RegistrationRow): RegistrationRecord {
+  return {
     createdAt: row.created_at,
     email: row.email,
     fullName: row.full_name,
     normalizedEmail: row.normalized_email,
     organizationOrAffiliation: row.organization_or_affiliation,
-  }));
+  };
 }
