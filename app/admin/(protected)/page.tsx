@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { isCurrentAdminOwner } from "@/lib/admin-auth-server";
+import { countPaidPayments } from "@/lib/payment-store";
+import { countRegistrations } from "@/lib/registration-store";
 
 export default async function AdminPage() {
-  const isOwner = await isCurrentAdminOwner();
+  const [isOwner, totalRegistrations, totalPaid] = await Promise.all([
+    isCurrentAdminOwner(),
+    countRegistrations(),
+    countPaidPayments(),
+  ]);
 
   return (
     <section className="admin-page">
@@ -25,6 +31,14 @@ export default async function AdminPage() {
       </section>
 
       <section className="admin-summary">
+        <div className="admin-summary__item">
+          <p className="admin-summary__label">Total registrations</p>
+          <p className="admin-summary__value">{totalRegistrations}</p>
+        </div>
+        <div className="admin-summary__item">
+          <p className="admin-summary__label">Total paid</p>
+          <p className="admin-summary__value">{totalPaid}</p>
+        </div>
         <div className="admin-summary__item">
           <p className="admin-summary__label">Access</p>
           <p className="admin-summary__value">Protected</p>
