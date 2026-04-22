@@ -110,6 +110,14 @@ export async function listRegistrations(): Promise<RegistrationRecord[]> {
   return result.rows.map(mapRegistrationRow);
 }
 
+export async function countRegistrations() {
+  const result = await getDb().query<{ count: string }>(
+    `SELECT COUNT(*) AS count FROM ${REGISTRATIONS_TABLE}`,
+  );
+
+  return Number(result.rows[0]?.count ?? 0);
+}
+
 export async function getRegistrationByNormalizedEmail(normalizedEmail: string) {
   const normalizedRegistrationEmail = normalizedEmail.trim().toLowerCase();
 

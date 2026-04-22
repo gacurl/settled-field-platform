@@ -153,6 +153,16 @@ export async function createPaymentRecord(
   return mapPaymentRow(result.rows[0]);
 }
 
+export async function countPaidPayments() {
+  const result = await getDb().query<{ count: string }>(
+    `SELECT COUNT(*) AS count
+     FROM ${PAYMENTS_TABLE}
+     WHERE payment_status = 'paid'`,
+  );
+
+  return Number(result.rows[0]?.count ?? 0);
+}
+
 function mapPaymentRow(row: PaymentRow): PaymentRecord {
   return {
     amountTotal: row.amount_total,
