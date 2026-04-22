@@ -24,20 +24,17 @@ export function CheckoutButton({ email }: CheckoutButtonProps) {
       });
 
       const payload = (await response.json()) as {
-        error?: string;
         url?: string;
       };
 
       if (!response.ok || !payload.url) {
-        setErrorMessage(
-          payload.error ?? "We couldn't start checkout right now. Please try again.",
-        );
+        setErrorMessage("Checkout did not start. Try again when you are ready.");
         return;
       }
 
       window.location.assign(payload.url);
     } catch {
-      setErrorMessage("We couldn't start checkout right now. Please try again.");
+      setErrorMessage("Checkout did not start. Try again when you are ready.");
     } finally {
       setIsPending(false);
     }
@@ -54,9 +51,10 @@ export function CheckoutButton({ email }: CheckoutButtonProps) {
         {isPending ? "Redirecting to Payment..." : "Continue to Payment"}
       </button>
       {errorMessage ? (
-        <p className="register-success-section__note" role="alert">
-          {errorMessage}
-        </p>
+        <div className="register-success-error" role="alert">
+          <p className="register-success-error__title">Payment step paused</p>
+          <p>{errorMessage}</p>
+        </div>
       ) : null}
     </>
   );

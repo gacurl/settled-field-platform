@@ -18,9 +18,8 @@ export default async function RegisterSuccessPage() {
           Your details are in place.
         </h1>
         <p className="register-success-page__lede">
-          {draft.firstName} {draft.lastName}, we have your registration details
-          and the next step is payment. This page is here to make the handoff
-          feel clear before checkout begins.
+          {draft.firstName} {draft.lastName}, your registration details are
+          saved. Continue to payment to hold your place in the summit flow.
         </p>
       </div>
 
@@ -29,8 +28,8 @@ export default async function RegisterSuccessPage() {
           <h2>What happens next</h2>
           <ol className="register-success-list">
             <li>Your registration details stay ready for checkout.</li>
-            <li>Payment is the next step in the summit flow.</li>
-            <li>Confirmation comes after checkout is complete.</li>
+            <li>Stripe Checkout is the next step.</li>
+            <li>After checkout, you will return to a confirmation point.</li>
           </ol>
         </section>
 
@@ -50,9 +49,8 @@ export default async function RegisterSuccessPage() {
         <div className="register-success-actions__content">
           <h2>Continue when you&apos;re ready</h2>
           <p>
-            Stripe is still operating through the current scaffold, so this
-            continues into the existing payment-ready path without implying
-            completed payment.
+            You will finish payment through Stripe. The return page gives you a
+            clear next step while payment is verified server-side.
           </p>
         </div>
         <div className="register-success-actions__links">
