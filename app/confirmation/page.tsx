@@ -26,20 +26,20 @@ export default async function ConfirmationPage({
         </h1>
         <p className="confirmation-page__lede">
           {fromCheckout
-            ? "Your checkout flow has reached its confirmation destination. Payment verification is handled server-side via Stripe webhooks after checkout returns."
-            : "This page is the public confirmation destination for the summit flow. It supports the live checkout return while staying clear that this page itself is not the payment source of truth."}
+            ? "You have returned from Stripe Checkout. Payment verification is handled server-side through Stripe webhooks."
+            : "This page is the public return point for the summit flow. It does not use the browser redirect as proof of payment."}
         </p>
 
         <div className="confirmation-status">
           <p className="confirmation-status__title">
             {fromCheckout
-              ? "Checkout return structure is ready"
-              : "Controlled confirmation placeholder"}
+              ? "Checkout return received"
+              : "Return point ready"}
           </p>
           <p className="confirmation-status__body">
             {fromCheckout
-              ? "You are seeing the public page used after checkout returns. Verified Stripe webhook events, not this redirect, determine whether payment is recorded."
-              : "This route completes the public flow shape without claiming payment success from the browser alone."}
+              ? "Watch for summit follow-up details. If anything needs attention, we will use the registration information you provided."
+              : "Use this page as the controlled destination after checkout, without claiming payment success from the redirect alone."}
           </p>
         </div>
       </div>
@@ -48,22 +48,20 @@ export default async function ConfirmationPage({
         <section className="confirmation-section">
           <h2>What happens next</h2>
           <ol className="confirmation-list">
-            <li>Your registration and checkout path can end here cleanly.</li>
-            <li>Summit details and follow-up instructions can be added here later.</li>
-            <li>Payment records are created only after Stripe sends a verified webhook event.</li>
+            <li>Your checkout return has a stable place to land.</li>
+            <li>Payment records come from verified Stripe webhook events.</li>
+            <li>Summit follow-up can be added here without changing payment truth.</li>
           </ol>
         </section>
 
         <section className="confirmation-section">
           <h2>What this page means today</h2>
           <p>
-            This is a calm handoff point for the live checkout return. The page
-            gives the user a stable destination without overstating what the
-            browser alone can prove.
+            This is a calm handoff point after Stripe. It gives you a stable
+            next step without treating the browser redirect as payment proof.
           </p>
           <p className="confirmation-section__note">
-            Details, attendance instructions, or payment-specific messaging can
-            be layered in later without replacing the route.
+            Return to the summit page if you want to review the event details.
           </p>
         </section>
       </div>

@@ -531,6 +531,24 @@ a {
   padding-top: var(--space-6);
 }
 
+.register-success-error {
+  width: 100%;
+  max-width: 24rem;
+  padding-top: var(--space-4);
+  color: var(--color-accent);
+  line-height: 1.5;
+}
+
+.register-success-error p {
+  margin: 0;
+}
+
+.register-success-error__title {
+  margin-bottom: 0.25rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
 .register-success-actions {
   display: flex;
   flex-wrap: wrap;
