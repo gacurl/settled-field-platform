@@ -5,40 +5,105 @@ export default function HomePage() {
     <div className="public-page">
       <section className="public-section">
         <h1 className="public-section__title">
-          Find Your Direction — Keep Dominating
+          Find Your Direction. Keep Dominating.
         </h1>
         <p className="public-section__body">
-          A calm, focused starting point for athletes and veterans ready to
-          move into their next season with clarity, structure, and momentum.
+          The Success Summit brings athletes, veterans, and leaders together to
+          navigate transition and build what&apos;s next.
         </p>
-        <Link className="public-button" href="/summit">
-          View Summit
-        </Link>
+        <div className="public-actions">
+          <Link className="public-button" href="/summit">
+            View Summit
+          </Link>
+          <Link className="public-link" href="/register">
+            Register Interest
+          </Link>
+        </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <h2 className="public-section__heading">
-          Purpose
-        </h2>
+        <p className="public-section__eyebrow">Who It&apos;s For</p>
+        <h2 className="public-section__heading">Built for people in transition</h2>
         <p className="public-section__body">
-          Transition can be disorienting for athletes and veterans when the
-          structure that once defined everyday life starts to change. The
-          platform exists to make that shift feel less uncertain by pointing
-          people toward practical guidance, trusted voices, and a clearer next
-          step.
+          The summit is designed for people carrying responsibility, momentum,
+          and a real next decision.
+        </p>
+        <ul className="public-section__list">
+          <li>Student Veterans</li>
+          <li>Veterans</li>
+          <li>Student-Athletes</li>
+          <li>Athletic Leaders</li>
+          <li>Corporate Professionals</li>
+        </ul>
+      </section>
+
+      <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">What You&apos;ll Gain</p>
+        <h2 className="public-section__heading">Practical value, not noise</h2>
+        <ul className="public-section__list">
+          <li>clarity in transition</li>
+          <li>leadership perspective</li>
+          <li>real-world strategies</li>
+          <li>meaningful connections</li>
+        </ul>
+      </section>
+
+      <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">Three Themes</p>
+        <h2 className="public-section__heading">Focused on what moves people forward</h2>
+        <div className="public-theme-grid">
+          <section className="public-theme-card">
+            <h3>Mental Success</h3>
+            <p>
+              Build the mindset, discipline, and resilience needed to lead well
+              under pressure.
+            </p>
+          </section>
+          <section className="public-theme-card">
+            <h3>Transition Success</h3>
+            <p>
+              Navigate change with more clarity, better direction, and fewer
+              avoidable missteps.
+            </p>
+          </section>
+          <section className="public-theme-card">
+            <h3>Actions for Success</h3>
+            <p>
+              Leave with practical moves you can apply in work, leadership, and
+              life after the event.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">Why It Matters</p>
+        <h2 className="public-section__heading">Direction changes outcomes</h2>
+        <p className="public-section__body">
+          Transition is hard when identity, structure, and expectations are all
+          shifting at once. People do not just need encouragement. They need
+          perspective, strategy, and a clearer path forward.
+        </p>
+        <p className="public-section__body public-section__body--spaced">
+          The Success Summit exists to fill that gap with grounded
+          conversations, leadership insight, and a room built for what comes
+          next.
         </p>
       </section>
 
       <section className="public-section public-section--bordered">
-        <h2 className="public-section__heading">
-          Take the Next Step
-        </h2>
+        <h2 className="public-section__heading">Move toward what&apos;s next</h2>
         <p className="public-section__body">
-          Explore the summit and see what direction looks like in action.
+          Explore the summit or register interest now.
         </p>
-        <Link className="public-link" href="/summit">
-          View Summit
-        </Link>
+        <div className="public-actions">
+          <Link className="public-button" href="/summit">
+            View Summit
+          </Link>
+          <Link className="public-link" href="/register">
+            Register Interest
+          </Link>
+        </div>
       </section>
     </div>
   );
