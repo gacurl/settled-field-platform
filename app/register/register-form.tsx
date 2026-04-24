@@ -14,7 +14,6 @@ const INITIAL_STATE: RegisterFormState = {
 
 type RegisterFormProps = {
   defaultValues: RegistrationFormValues;
-  paymentReady: boolean;
 };
 
 type RegisterFieldProps = {
@@ -93,7 +92,6 @@ function RegisterField({
 
 export function RegisterForm({
   defaultValues,
-  paymentReady,
 }: RegisterFormProps) {
   const [state, formAction, pending] = useActionState(
     submitRegistration,
@@ -189,27 +187,18 @@ export function RegisterForm({
 
       <div className="register-cta">
         <div className="register-cta__content">
-          <h2>
-            {paymentReady
-              ? "Your details are ready for payment"
-              : "Continue when you're ready"}
-          </h2>
+          <h2>Reserve your spot</h2>
           <p>
-            {paymentReady
-              ? "Your registration draft is saved. Continue to payment to use the new checkout entry point, or adjust the form first and continue when it looks right."
-              : "Payment is the next step. This page now captures your details, validates the essentials, and prepares a clean handoff before checkout is added."}
+            Register your interest now. We&apos;ll save your details and follow
+            up with event information, updates, and next steps.
           </p>
         </div>
         <button
           className="register-cta__button"
-          disabled={paymentReady ? false : pending}
-          formAction={paymentReady ? "/api/checkout" : undefined}
-          formMethod={paymentReady ? "post" : undefined}
+          disabled={pending}
           type="submit"
         >
-          {pending
-            ? "Saving your details..."
-            : "Continue to Payment"}
+          {pending ? "Saving your details..." : "Register Interest"}
         </button>
       </div>
     </form>
