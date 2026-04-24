@@ -1,21 +1,37 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SummitPage() {
   return (
     <div className="public-page">
-      <section className="public-section">
-        <h1 className="public-section__title">The Success Summit</h1>
-        <p className="public-section__body">
-          A leadership and transition summit for athletes, veterans, and
-          professionals navigating what&apos;s next.
-        </p>
-        <div className="public-actions">
-          <Link className="public-button" href="/register">
-            Register Interest
-          </Link>
-          <Link className="public-link" href="/">
-            View Landing
-          </Link>
+      <section className="public-section public-section--hero">
+        <div className="public-hero page-wrapper--hero">
+          <div className="public-hero__content">
+            <h1 className="public-section__title">The Success Summit</h1>
+            <p className="public-section__body">
+              A leadership and transition summit for athletes, veterans, and
+              professionals navigating what&apos;s next.
+            </p>
+            <div className="public-actions">
+              <Link className="public-button" href="/register">
+                Register Interest
+              </Link>
+              <Link className="public-link" href="/">
+                View Landing
+              </Link>
+            </div>
+          </div>
+
+          <div className="public-hero__media">
+            <div className="public-image-frame public-image-frame--hero">
+              <Image
+                alt="Summit overview visual with a three-day structure and partner-ready event framing."
+                height="800"
+                src="/success-summit-overview.svg"
+                width="1600"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
