@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header() {
   return (
@@ -8,16 +9,19 @@ export function Header() {
           Settled on the Field
         </Link>
       </div>
-      <nav aria-label="Primary">
-        <ul className="nav-list">
-          <li>
-            <Link href="/">Landing</Link>
-          </li>
-          <li>
-            <Link href="/summit">Summit</Link>
-          </li>
-        </ul>
-      </nav>
+      <div className="shell-header__actions">
+        <nav aria-label="Primary">
+          <ul className="nav-list">
+            <li>
+              <Link href="/">Landing</Link>
+            </li>
+            <li>
+              <Link href="/summit">Summit</Link>
+            </li>
+          </ul>
+        </nav>
+        <ThemeToggle />
+      </div>
     </div>
   );
 }
