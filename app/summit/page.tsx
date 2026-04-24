@@ -2,96 +2,36 @@ import Link from "next/link";
 
 export default function SummitPage() {
   return (
-    <>
-      <section
-        style={{
-          paddingTop: "var(--space-8)",
-          paddingBottom: "var(--space-8)",
-        }}
-      >
-        <h1
-          style={{
-            margin: "0 0 var(--space-4)",
-            color: "var(--color-primary)",
-            fontSize: "2.5rem",
-            lineHeight: 1.1,
-          }}
-        >
+    <div className="public-page">
+      <section className="public-section">
+        <h1 className="public-section__title">
           Settled on the Field Summit
         </h1>
-        <p
-          style={{
-            maxWidth: "42rem",
-            margin: "0 0 var(--space-6)",
-            color: "var(--color-accent)",
-          }}
-        >
+        <p className="public-section__body">
           A focused event for people navigating transition and looking for a
           clearer next move, grounded conversations, and practical direction.
         </p>
-        <Link
-          href="/register"
-          style={{
-            display: "inline-block",
-            padding: "var(--space-4) var(--space-6)",
-            background: "var(--color-primary)",
-            color: "var(--color-background)",
-          }}
-        >
+        <Link className="public-button" href="/register">
           Register Now
         </Link>
       </section>
 
-      <section
-        style={{
-          paddingTop: "var(--space-8)",
-          paddingBottom: "var(--space-8)",
-        }}
-      >
-        <h2
-          style={{
-            margin: "0 0 var(--space-4)",
-            color: "var(--color-primary)",
-            fontSize: "1.5rem",
-          }}
-        >
+      <section className="public-section public-section--bordered">
+        <h2 className="public-section__heading">
           Who It&apos;s For
         </h2>
-        <ul
-          style={{
-            margin: "0",
-            paddingLeft: "1.25rem",
-            color: "var(--color-accent)",
-          }}
-        >
+        <ul className="public-section__list">
           <li>Athletes preparing for life beyond the current season</li>
           <li>Veterans navigating a new civilian chapter</li>
           <li>Transitioning professionals looking for renewed direction</li>
         </ul>
       </section>
 
-      <section
-        style={{
-          paddingTop: "var(--space-8)",
-          paddingBottom: "var(--space-8)",
-        }}
-      >
-        <h2
-          style={{
-            margin: "0 0 var(--space-4)",
-            color: "var(--color-primary)",
-            fontSize: "1.5rem",
-          }}
-        >
+      <section className="public-section public-section--bordered">
+        <h2 className="public-section__heading">
           What You&apos;ll Get
         </h2>
-        <ul
-          style={{
-            margin: "0",
-            paddingLeft: "1.25rem",
-            color: "var(--color-accent)",
-          }}
-        >
+        <ul className="public-section__list">
           <li>Direction</li>
           <li>Clarity</li>
           <li>Connection</li>
@@ -99,69 +39,28 @@ export default function SummitPage() {
         </ul>
       </section>
 
-      <section
-        style={{
-          paddingTop: "var(--space-8)",
-          paddingBottom: "var(--space-8)",
-        }}
-      >
-        <h2
-          style={{
-            margin: "0 0 var(--space-4)",
-            color: "var(--color-primary)",
-            fontSize: "1.5rem",
-          }}
-        >
+      <section className="public-section public-section--bordered">
+        <h2 className="public-section__heading">
           Structure and Experience
         </h2>
-        <p
-          style={{
-            maxWidth: "42rem",
-            margin: "0",
-            color: "var(--color-accent)",
-          }}
-        >
+        <p className="public-section__body">
           Expect focused talks, experienced speakers, room for interaction, and
           space to build meaningful connections with people facing similar
           questions about what comes next.
         </p>
       </section>
 
-      <section
-        style={{
-          paddingTop: "var(--space-8)",
-          paddingBottom: "var(--space-8)",
-        }}
-      >
-        <h2
-          style={{
-            margin: "0 0 var(--space-4)",
-            color: "var(--color-primary)",
-            fontSize: "1.5rem",
-          }}
-        >
+      <section className="public-section public-section--bordered">
+        <h2 className="public-section__heading">
           Ready to Join?
         </h2>
-        <p
-          style={{
-            margin: "0 0 var(--space-6)",
-            color: "var(--color-accent)",
-          }}
-        >
+        <p className="public-section__body">
           Reserve your place and move into the next step with intention.
         </p>
-        <Link
-          href="/register"
-          style={{
-            display: "inline-block",
-            padding: "var(--space-4) var(--space-6)",
-            background: "var(--color-background)",
-            color: "var(--color-primary)",
-          }}
-        >
+        <Link className="public-link" href="/register">
           Register Now
         </Link>
       </section>
-    </>
+    </div>
   );
 }

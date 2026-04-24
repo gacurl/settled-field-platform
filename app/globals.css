@@ -1,15 +1,40 @@
 :root {
-  --color-background: #ffffff;
-  --color-surface: #f6f3ee;
+  --color-background: #f7f6f3;
+  --color-surface: #fffdf9;
   --color-border: #d7d0c4;
-  --color-text: #111111;
-  --color-primary: #0a0a0a;
-  --color-accent: #666666;
+  --color-text: #1a1a1a;
+  --color-muted: #6b7280;
+  --color-primary: #1e2a38;
+  --color-secondary: #c05621;
+  --color-accent: #d69e2e;
+  --color-link: #1e2a38;
+  --color-button-primary-bg: #1e2a38;
+  --color-button-primary-text: #f7f6f3;
+  --color-button-secondary-bg: transparent;
+  --color-button-secondary-text: #1e2a38;
+  --color-button-secondary-border: #1e2a38;
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
   --space-12: 3rem;
   --content-width: 64rem;
+}
+
+[data-theme="dark"] {
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-border: #334155;
+  --color-text: #e5e7eb;
+  --color-muted: #94a3b8;
+  --color-primary: #334155;
+  --color-secondary: #c05621;
+  --color-accent: #f6ad55;
+  --color-link: #f6ad55;
+  --color-button-primary-bg: #c05621;
+  --color-button-primary-text: #f7f6f3;
+  --color-button-secondary-bg: transparent;
+  --color-button-secondary-text: #e5e7eb;
+  --color-button-secondary-border: #94a3b8;
 }
 
 * {
@@ -18,6 +43,11 @@
 
 html {
   background: var(--color-background);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
@@ -36,8 +66,12 @@ body > footer {
 }
 
 a {
-  color: inherit;
+  color: var(--color-link);
   text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-secondary);
 }
 
 .page-wrapper {
@@ -58,11 +92,18 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .brand-link {
   color: var(--color-primary);
   font-weight: 600;
+}
+
+.shell-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .nav-list {
@@ -71,6 +112,28 @@ a {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.nav-list a {
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.theme-toggle {
+  border: 1px solid var(--color-button-secondary-border);
+  min-height: 2.75rem;
+  padding: 0.625rem 1rem;
+  background: var(--color-button-secondary-bg);
+  color: var(--color-button-secondary-text);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
 }
 
 .app-main {
@@ -91,8 +154,89 @@ a {
 
 .route-placeholder p,
 .shell-footer {
-  color: var(--color-accent);
+  color: var(--color-muted);
   margin: 0;
+}
+
+.shell-footer {
+  border-top: 1px solid var(--color-border);
+}
+
+.public-page {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.public-section {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+.public-section--bordered {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.public-section__title {
+  margin: 0 0 var(--space-4);
+  color: var(--color-primary);
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.public-section__heading {
+  margin: 0 0 var(--space-4);
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.public-section__body,
+.public-section__list {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.public-section__list {
+  display: grid;
+  gap: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.public-section__body + .public-button,
+.public-section__body + .public-link {
+  margin-top: var(--space-6);
+}
+
+.public-button,
+.public-link {
+  display: inline-block;
+  min-height: 3.25rem;
+  padding: var(--space-4) var(--space-6);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.public-button {
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
+}
+
+.public-button:hover {
+  background: var(--color-secondary);
+  color: var(--color-button-primary-text);
+}
+
+.public-link {
+  border: 1px solid var(--color-button-secondary-border);
+  color: var(--color-button-secondary-text);
+}
+
+.public-link:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
 }
 
 .register-page {
@@ -125,7 +269,7 @@ a {
 .register-page__lede {
   max-width: 40rem;
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-muted);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -146,7 +290,7 @@ a {
 
 .register-status__body {
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-muted);
 }
 
 .register-status--error .register-status__title,
@@ -185,7 +329,7 @@ a {
 }
 
 .register-form__required-note {
-  color: var(--color-accent);
+  color: var(--color-muted);
 }
 
 .register-form__feedback {
@@ -225,7 +369,7 @@ a {
   border: 1px solid var(--color-border);
   border-radius: 0;
   padding: 0.9375rem 1rem;
-  background: var(--color-background);
+  background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
   font-size: 1rem;
@@ -284,7 +428,7 @@ a {
 .register-cta p,
 .register-panel p,
 .register-panel li {
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -300,8 +444,8 @@ a {
   border: 0;
   min-height: 3.5rem;
   padding: var(--space-4) var(--space-6);
-  background: var(--color-primary);
-  color: var(--color-background);
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
   font: inherit;
   font-weight: 600;
   line-height: 1.2;
@@ -365,7 +509,7 @@ a {
 .confirmation-page__lede {
   max-width: 40rem;
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-muted);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -393,7 +537,7 @@ a {
 .confirmation-section p,
 .confirmation-section li,
 .confirmation-actions p {
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -444,13 +588,14 @@ a {
 }
 
 .confirmation-actions__primary {
-  background: var(--color-primary);
-  color: var(--color-background);
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
 }
 
 .confirmation-actions__secondary {
-  background: var(--color-background);
-  color: var(--color-primary);
+  background: var(--color-button-secondary-bg);
+  color: var(--color-button-secondary-text);
+  border: 1px solid var(--color-button-secondary-border);
 }
 
 .register-success-page {
@@ -483,7 +628,7 @@ a {
 .register-success-page__lede {
   max-width: 40rem;
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-muted);
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -511,7 +656,7 @@ a {
 .register-success-section p,
 .register-success-section li,
 .register-success-actions p {
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -535,7 +680,7 @@ a {
   width: 100%;
   max-width: 24rem;
   padding-top: var(--space-4);
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -583,14 +728,15 @@ a {
 }
 
 .register-success-actions__primary {
-  background: var(--color-primary);
-  color: var(--color-background);
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
   cursor: pointer;
 }
 
 .register-success-actions__secondary {
-  background: var(--color-background);
-  color: var(--color-primary);
+  background: var(--color-button-secondary-bg);
+  color: var(--color-button-secondary-text);
+  border: 1px solid var(--color-button-secondary-border);
 }
 
 .admin-login-page,
@@ -634,7 +780,7 @@ a {
 .admin-page__lede,
 .admin-panel p {
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -667,7 +813,7 @@ a {
   min-height: 3.25rem;
   border: 1px solid var(--color-border);
   padding: 0.9375rem 1rem;
-  background: var(--color-background);
+  background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
   font-size: 1rem;
@@ -688,8 +834,8 @@ a {
   border: 0;
   min-height: 3.5rem;
   padding: var(--space-4) var(--space-6);
-  background: var(--color-primary);
-  color: var(--color-background);
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
   font: inherit;
   font-weight: 600;
   line-height: 1.2;
@@ -697,7 +843,7 @@ a {
 }
 
 .admin-button--danger {
-  background: #6e1f1f;
+  background: var(--color-secondary);
 }
 
 .admin-link-button,
@@ -747,7 +893,7 @@ a {
 .admin-card__eyebrow,
 .admin-card__status {
   margin: 0 0 0.5rem;
-  color: var(--color-accent);
+  color: var(--color-muted);
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -781,7 +927,7 @@ a {
 
 .admin-card__body {
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -870,7 +1016,7 @@ a {
 }
 
 .admin-attendees__table td {
-  color: var(--color-accent);
+  color: var(--color-muted);
   line-height: 1.5;
 }
 
@@ -913,11 +1059,11 @@ a {
 }
 
 .admin-users__remove-link {
-  color: #6e1f1f;
+  color: var(--color-secondary);
 }
 
 .admin-users__disable-button:disabled {
-  color: var(--color-accent);
+  color: var(--color-muted);
   cursor: default;
 }
 
@@ -929,7 +1075,7 @@ a {
 }
 
 .admin-users__action-note {
-  color: var(--color-accent);
+  color: var(--color-muted);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -968,6 +1114,11 @@ a {
   .shell-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .shell-header__actions {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .register-page__intro {
