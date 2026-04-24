@@ -9,8 +9,6 @@ function getSearchParamValue(value: string | string[] | undefined) {
 type RegisterPageProps = {
   searchParams: Promise<{
     error?: string | string[];
-    mode?: string | string[];
-    step?: string | string[];
   }>;
 };
 
@@ -19,65 +17,26 @@ export default async function RegisterPage({
 }: RegisterPageProps) {
   const resolvedSearchParams = await searchParams;
   const draft = await readRegistrationDraft();
-  const step = getSearchParamValue(resolvedSearchParams.step);
-  const mode = getSearchParamValue(resolvedSearchParams.mode);
   const error = getSearchParamValue(resolvedSearchParams.error);
-  const paymentReady = step === "payment" && draft !== null;
 
   return (
     <section className="register-page">
       <div className="register-page__intro">
         <p className="register-page__eyebrow">Registration</p>
         <h1 className="register-page__title">
-          Take your next step with intention.
+          Register your interest.
         </h1>
         <p className="register-page__lede">
-          Share a few details so we can hold your place and carry you into the
-          payment step with clarity. This is a focused summit for people
-          navigating transition and looking for practical direction.
+          Share a few details to reserve your spot. We&apos;ll follow up with
+          event details, updates, and next steps for the summit.
         </p>
 
         {error === "draft" ? (
           <div className="register-status register-status--error">
-            <p className="register-status__title">
-              Save your registration details before payment
-            </p>
+            <p className="register-status__title">Review your registration details</p>
             <p className="register-status__body">
-              A valid registration draft was not available for checkout. Review
-              your details and continue again.
-            </p>
-          </div>
-        ) : null}
-
-        {paymentReady ? (
-          <div className="register-status register-status--success">
-            <p className="register-status__title">Registration details saved</p>
-            <p className="register-status__body">
-              {draft?.firstName} {draft?.lastName} is ready for the payment
-              handoff with {draft?.email}.
-            </p>
-          </div>
-        ) : null}
-
-        {mode === "stub" ? (
-          <div className="register-status">
-            <p className="register-status__title">Checkout stub mode</p>
-            <p className="register-status__body">
-              Stripe checkout is not live in this environment yet. Your payment
-              handoff is wired and ready for keys to be added later.
-            </p>
-          </div>
-        ) : null}
-
-        {mode === "stripe-ready" ? (
-          <div className="register-status">
-            <p className="register-status__title">
-              Stripe configuration detected
-            </p>
-            <p className="register-status__body">
-              Checkout session scaffolding is in place. The final Stripe API
-              call can be added with minimal change once live integration work
-              begins.
+              We couldn&apos;t find a saved registration summary for that step.
+              Review your details and submit again.
             </p>
           </div>
         ) : null}
@@ -86,7 +45,6 @@ export default async function RegisterPage({
       <div className="register-page__grid">
         <RegisterForm
           defaultValues={draft ?? EMPTY_REGISTRATION_FORM_VALUES}
-          paymentReady={paymentReady}
         />
 
         <aside className="register-sidebar">
@@ -108,12 +66,12 @@ export default async function RegisterPage({
             <h2>What happens next</h2>
             <ol>
               <li>Complete your registration details.</li>
-              <li>Review the payment step.</li>
-              <li>Receive confirmation once checkout is live.</li>
+              <li>We save your interest and reserve your spot.</li>
+              <li>We follow up with details, updates, and next steps.</li>
             </ol>
             <p className="register-panel__note">
-              Questions or hesitation are normal. This step is here to make the
-              path feel clear before payment is introduced.
+              If you&apos;re still deciding, that&apos;s fine. This form keeps the
+              next step simple and gives us a clear way to follow up.
             </p>
           </section>
         </aside>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readRegistrationDraft } from "../registration";
-import { CheckoutButton } from "./checkout-button";
 
 export default async function RegisterSuccessPage() {
   const draft = await readRegistrationDraft();
@@ -15,11 +14,12 @@ export default async function RegisterSuccessPage() {
       <div className="register-success-page__intro">
         <p className="register-success-page__eyebrow">Registration</p>
         <h1 className="register-success-page__title">
-          Your details are in place.
+          You&apos;re on the list.
         </h1>
         <p className="register-success-page__lede">
-          {draft.firstName} {draft.lastName}, your registration details are
-          saved. Continue to payment to hold your place in the summit flow.
+          {draft.firstName} {draft.lastName}, we&apos;ve received your
+          registration. We&apos;ll follow up with event details, updates, and
+          next steps.
         </p>
       </div>
 
@@ -27,9 +27,9 @@ export default async function RegisterSuccessPage() {
         <section className="register-success-section">
           <h2>What happens next</h2>
           <ol className="register-success-list">
-            <li>Your registration details stay ready for checkout.</li>
-            <li>Stripe Checkout is the next step.</li>
-            <li>After checkout, you will return to a confirmation point.</li>
+            <li>Your registration details are saved.</li>
+            <li>We&apos;ll share updates as event planning progresses.</li>
+            <li>You&apos;ll receive next steps directly from the summit team.</li>
           </ol>
         </section>
 
@@ -39,22 +39,24 @@ export default async function RegisterSuccessPage() {
           {draft.organization ? <p>{draft.organization}</p> : null}
           {draft.role ? <p>{draft.role}</p> : null}
           <p className="register-success-section__note">
-            Need to adjust something before payment? Return to registration and
-            update your details.
+            Need to adjust something? Return to registration and update your
+            details.
           </p>
         </section>
       </div>
 
       <section className="register-success-actions">
         <div className="register-success-actions__content">
-          <h2>Continue when you&apos;re ready</h2>
+          <h2>Keep moving</h2>
           <p>
-            You will finish payment through Stripe. The return page gives you a
-            clear next step while payment is verified server-side.
+            Review the summit details again or return to registration if you
+            want to change anything before we follow up.
           </p>
         </div>
         <div className="register-success-actions__links">
-          <CheckoutButton email={draft.email} />
+          <Link className="register-success-actions__primary" href="/confirmation">
+            View Confirmation
+          </Link>
           <Link className="register-success-actions__secondary" href="/register">
             Edit Registration
           </Link>
