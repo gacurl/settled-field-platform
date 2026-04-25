@@ -13,6 +13,8 @@
   --color-button-secondary-bg: transparent;
   --color-button-secondary-text: #1e2a38;
   --color-button-secondary-border: #1e2a38;
+  --shadow-action: 0 14px 30px rgba(30, 42, 56, 0.14);
+  --shadow-action-hover: 0 18px 36px rgba(30, 42, 56, 0.22);
   --space-4: 1rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
@@ -37,6 +39,8 @@
   --color-button-secondary-bg: transparent;
   --color-button-secondary-text: #e5e7eb;
   --color-button-secondary-border: #94a3b8;
+  --shadow-action: 0 14px 30px rgba(2, 6, 23, 0.34);
+  --shadow-action-hover: 0 18px 36px rgba(2, 6, 23, 0.44);
 }
 
 * {
@@ -507,28 +511,54 @@ a:hover {
   display: inline-block;
   min-height: 3.25rem;
   padding: var(--space-4) var(--space-6);
+  border-radius: 999px;
   font-weight: 600;
   line-height: 1.2;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
 .public-button {
-  background: var(--color-button-primary-bg);
-  color: var(--color-button-primary-text);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #ff7a1a;
+  color: #fff;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .public-button:hover {
-  background: var(--color-secondary);
-  color: var(--color-button-primary-text);
+  background: #ff8a2a;
+  border-color: rgba(0, 0, 0, 0.2);
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.45),
+    0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .public-link {
   border: 1px solid var(--color-button-secondary-border);
+  background: var(--color-surface);
   color: var(--color-button-secondary-text);
 }
 
 .public-link:hover {
   border-color: var(--color-secondary);
+  background: var(--color-surface);
   color: var(--color-secondary);
+}
+
+.public-link--on-dark {
+  border-color: rgba(247, 246, 243, 0.72);
+  background: rgba(247, 246, 243, 0.12);
+  color: var(--color-button-primary-text);
+  box-shadow: var(--shadow-action);
+}
+
+.public-link--on-dark:hover {
+  border-color: var(--color-accent);
+  background: rgba(247, 246, 243, 0.18);
+  color: var(--color-button-primary-text);
+  box-shadow: var(--shadow-action-hover);
 }
 
 @media (min-width: 900px) {
