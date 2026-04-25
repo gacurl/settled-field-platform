@@ -42,3 +42,5 @@ yarn-error.log*
 next-env.d.ts
 docs/codex/PROJECT_MEMORY.md
 docs/codex/CURRENT_STATE.md
+# Local reusable playbooks
+/docs/playbooks/conversion-system.md
