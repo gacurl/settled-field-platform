@@ -36,6 +36,34 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">Speaker Perspective</p>
+        <h2 className="public-section__heading">Credibility comes from the room</h2>
+        <div className="public-theme-grid">
+          <section className="public-theme-card">
+            <h3>Leadership practitioners</h3>
+            <p>
+              Sessions are built to reflect real leadership pressure, decision-making,
+              and transition work.
+            </p>
+          </section>
+          <section className="public-theme-card">
+            <h3>Athlete and veteran context</h3>
+            <p>
+              The summit is shaped for people moving out of structured environments
+              and into what comes next.
+            </p>
+          </section>
+          <section className="public-theme-card">
+            <h3>Applied conversation</h3>
+            <p>
+              The emphasis is on perspective people can use, not inflated bios or
+              generic inspiration.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">Event Overview</p>
         <h2 className="public-section__heading">A structured summit with real-world relevance</h2>
         <p className="public-section__body">
@@ -110,10 +138,9 @@ export default function SummitPage() {
         <p className="public-section__eyebrow">Outcomes</p>
         <h2 className="public-section__heading">What the experience is built to deliver</h2>
         <ul className="public-section__list">
-          <li>breakout sessions</li>
-          <li>networking</li>
-          <li>leadership development</li>
-          <li>career alignment</li>
+          <li>clarify the next move</li>
+          <li>strengthen leadership under change</li>
+          <li>leave with practical actions to execute</li>
         </ul>
       </section>
 
