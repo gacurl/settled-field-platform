@@ -43,6 +43,10 @@
   box-sizing: border-box;
 }
 
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
 html {
   background: var(--color-background);
   color-scheme: light;
@@ -57,8 +61,26 @@ body {
   min-height: 100vh;
   background: var(--color-background);
   color: var(--color-text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
   line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero-title {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.03em;
 }
 
 body > header,
@@ -131,7 +153,6 @@ a:hover {
   padding: 0.625rem 1rem;
   background: var(--color-button-secondary-bg);
   color: var(--color-button-secondary-text);
-  font: inherit;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
@@ -705,7 +726,6 @@ a:hover {
   padding: 0.9375rem 1rem;
   background: var(--color-surface);
   color: var(--color-text);
-  font: inherit;
   font-size: 1rem;
   line-height: 1.5;
   font-weight: 400;
@@ -780,7 +800,6 @@ a:hover {
   padding: var(--space-4) var(--space-6);
   background: var(--color-button-primary-bg);
   color: var(--color-button-primary-text);
-  font: inherit;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
@@ -1056,7 +1075,6 @@ a:hover {
   border: 0;
   min-height: 3.5rem;
   padding: var(--space-4) var(--space-6);
-  font: inherit;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -1149,7 +1167,6 @@ a:hover {
   padding: 0.9375rem 1rem;
   background: var(--color-surface);
   color: var(--color-text);
-  font: inherit;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -1170,7 +1187,6 @@ a:hover {
   padding: var(--space-4) var(--space-6);
   background: var(--color-button-primary-bg);
   color: var(--color-button-primary-text);
-  font: inherit;
   font-weight: 600;
   line-height: 1.2;
   cursor: pointer;
