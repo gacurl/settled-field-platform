@@ -41,6 +41,34 @@ export default function HomePage() {
       </section>
 
       <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">Why This Room Matters</p>
+        <h2 className="public-section__heading">Built for real transition, not generic advice</h2>
+        <div className="audience-grid audience-grid--full">
+          <section className="audience-card">
+            <h3>Who it is for</h3>
+            <p>
+              Athletes, veterans, and professionals carrying pressure, momentum,
+              and a real next decision.
+            </p>
+          </section>
+          <section className="audience-card">
+            <h3>What they get</h3>
+            <p>
+              Clear perspective, practical direction, and a room shaped around
+              execution instead of noise.
+            </p>
+          </section>
+          <section className="audience-card">
+            <h3>Why it is credible</h3>
+            <p>
+              The summit is structured around leadership, transition, and
+              real-world application, not abstract motivation.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">Who It&apos;s For</p>
         <h2 className="public-section__heading">Built for people in transition</h2>
         <div className="public-section__copy">
@@ -62,10 +90,9 @@ export default function HomePage() {
         <p className="public-section__eyebrow">What You&apos;ll Gain</p>
         <h2 className="public-section__heading">Practical value, not noise</h2>
         <ul className="public-section__list">
-          <li>clarity in transition</li>
-          <li>leadership perspective</li>
-          <li>real-world strategies</li>
-          <li>meaningful connections</li>
+          <li>leave with clearer direction</li>
+          <li>turn pressure into practical next steps</li>
+          <li>build stronger alignment for what comes next</li>
         </ul>
       </section>
 
