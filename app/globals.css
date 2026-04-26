@@ -220,12 +220,16 @@ a:hover {
   font-size: 2rem;
 }
 
-.route-placeholder p,
-.shell-footer {
+.route-placeholder p {
   color: var(--color-muted);
   margin: 0;
 }
 
+/* Footer constraints:
+   - Keep Settled on the Field as the primary brand.
+   - Keep CurlTech attribution subtle and secondary.
+   - Do not let footer links, socials, or attribution compete with CTAs.
+   - Keep placeholder social/contact values easy to replace later. */
 .shell-footer {
   border-top: 1px solid var(--color-border);
   color: var(--color-muted);
@@ -257,7 +261,7 @@ a:hover {
 
 .shell-footer__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.85fr) minmax(0, 0.95fr) minmax(0, 0.7fr);
   gap: 2rem;
   align-items: start;
 }
@@ -276,31 +280,53 @@ a:hover {
   list-style: none;
 }
 
+.shell-footer__links a {
+  color: var(--color-muted);
+}
+
+.shell-footer__links a:hover {
+  color: var(--color-secondary);
+}
+
 .shell-footer__powered-by {
-  display: grid;
-  gap: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shell-footer__powered-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 160ms ease, transform 120ms ease;
+}
+
+.shell-footer__powered-link:hover {
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 .shell-footer__powered-label {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
   color: var(--color-muted);
+  line-height: 1;
 }
 
-.shell-footer__powered-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-primary);
-  font-weight: 600;
+.shell-footer__logo {
+  width: 130px;
+  height: auto;
+  opacity: 0.85;
+  filter: grayscale(1) contrast(1.4);
 }
 
-.shell-footer__logo-placeholder {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
+.shell-footer__powered-link:hover .shell-footer__logo {
+  filter: grayscale(0.6) contrast(1.1);
 }
+
 /* ==========================================================================
    Public site layout
    ========================================================================== */
@@ -479,6 +505,8 @@ a:hover {
   font-size: 1.05rem;
 }
 
+/* Editorial image treatment: scoped to framed public images only.
+   Do not apply these filters globally; logos and icons must remain untouched. */
 .public-image-frame {
   overflow: hidden;
   border: none;
@@ -703,7 +731,12 @@ a:hover {
 @media (max-width: 768px) {
   .shell-footer__grid {
     grid-template-columns: 1fr;
+    gap: var(--space-6);
     text-align: left;
+  }
+
+  .shell-footer__logo {
+    height: 1.5rem;
   }
 }
 
@@ -1606,16 +1639,6 @@ a:hover {
 }
 
 @media (max-width: 48rem) {
-  .shell-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .shell-header__actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
   .register-page__intro {
     margin-bottom: var(--space-6);
   }
