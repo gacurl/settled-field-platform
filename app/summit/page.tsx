@@ -25,9 +25,9 @@ export default function SummitPage() {
           <div className="public-hero__media">
             <div className="public-image-frame public-image-frame--hero">
               <Image
-                alt="Summit overview visual with a three-day structure and partner-ready event framing."
+                alt="Bill greeting and connecting in a leadership setting that reflects the summit's real-world tone."
                 height="800"
-                src="/success-summit-overview.svg"
+                src="/assets/images/bill-navy-handshake.jpg"
                 width="1600"
               />
             </div>

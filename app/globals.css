@@ -547,6 +547,20 @@ a:hover {
   object-fit: cover;
 }
 
+.public-image-frame--editorial {
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 18px;
+  box-shadow: 0 22px 52px rgba(17, 24, 39, 0.12);
+}
+
+.public-image-frame--editorial img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
 /* ==========================================================================
    Public cards and visual blocks
    ========================================================================== */
