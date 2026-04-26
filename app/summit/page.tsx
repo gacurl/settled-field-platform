@@ -107,6 +107,19 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
+        <div className="public-image-band">
+          <div className="public-image-frame public-image-frame--band public-image-frame--triptych">
+            <Image
+              alt="Athletes preparing, aligning, and connecting across football, locker room, and track environments."
+              height="1024"
+              src="/assets/summit/summit-energy-triptych.png"
+              width="1536"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">Program Structure</p>
         <h2 className="public-section__heading">Three days, three focused tracks</h2>
         <div className="public-theme-grid">

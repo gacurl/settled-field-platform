@@ -126,6 +126,78 @@ export default function HomePage() {
         </ul>
       </section>
 
+      <section className="public-section public-section--bordered public-section--centered">
+        <p className="public-section__eyebrow">Summit</p>
+        <h2 className="public-section__heading">A clear view of the full experience</h2>
+        <div className="public-section__copy">
+          <p className="public-section__body">
+            See how the summit is structured, what the themes cover, and how the
+            experience is built to move people from reflection into action.
+          </p>
+        </div>
+        <div className="public-actions">
+          <Link className="public-link" href="/summit">
+            Explore the Summit
+          </Link>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">Resources</p>
+        <h2 className="public-section__heading">Practical takeaways, previewed simply</h2>
+        <div className="public-theme-grid">
+          <section className="public-theme-card">
+            <h3>Decision frameworks</h3>
+            <p>
+              Learn practical ways to sort through competing priorities and make
+              the next move with more confidence.
+            </p>
+          </section>
+          <section className="public-theme-card">
+            <h3>Leadership application</h3>
+            <p>
+              Take away ideas that apply to work, team settings, and transition
+              moments beyond the event itself.
+            </p>
+          </section>
+          <section className="public-theme-card">
+            <h3>Momentum tools</h3>
+            <p>
+              Leave with simple next-step thinking you can use immediately instead
+              of a heavy content library.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">Partners</p>
+        <h2 className="public-section__heading">Built to welcome credible support</h2>
+        <div className="audience-grid audience-grid--full">
+          <section className="audience-card">
+            <h3>Logo-ready placement</h3>
+            <p>
+              Future partner marks and outbound links can live here without
+              changing the page structure.
+            </p>
+          </section>
+          <section className="audience-card">
+            <h3>Mission-aligned support</h3>
+            <p>
+              This space is reserved for organizations that strengthen the summit&apos;s
+              leadership, transition, and performance focus.
+            </p>
+          </section>
+          <section className="audience-card">
+            <h3>Placeholder-safe today</h3>
+            <p>
+              Partner details are intentionally lightweight for now so the page
+              stays credible before sponsor data is finalized.
+            </p>
+          </section>
+        </div>
+      </section>
+
       <section className="public-section public-section--bordered">
         <h2 className="public-section__heading">Take the next step with intention</h2>
         <p className="public-section__body">
