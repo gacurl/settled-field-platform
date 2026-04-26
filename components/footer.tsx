@@ -35,28 +35,22 @@ export function Footer() {
                 <Link href="/register">Register your interest</Link>
               </li>
               <li>
-                <a href="mailto:hello@settledonthefield.com">hello@settledonthefield.com</a>
+                <span>Contact details coming soon</span>
               </li>
             </ul>
             <p className="shell-footer__copyright">© Settled on the Field</p>
           </div>
 
-          <div className="shell-footer__powered-by">
-            <a
-              href="https://gregcurl.dev"
-              className="shell-footer__powered-link"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Built by CurlTech LLC"
-            >
-              <span className="shell-footer__powered-label">Built by</span>
+          <p className="shell-footer__attribution">
+            Built with care by{" "}
+            <a href="https://gregcurl.dev" target="_blank" rel="noopener noreferrer">
               <img
-                src="/assets/logos/curltech-logo-gray.png"
-                alt="CurlTech LLC"
-                className="shell-footer__logo"
+                src="/assets/logos/curltech-logo-gray.svg"
+                alt="CurlTech"
+                className="shell-footer__logo-inline"
               />
             </a>
-          </div>
+          </p>
         </div>
       </div>
     </div>
