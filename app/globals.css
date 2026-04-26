@@ -271,7 +271,7 @@ a:hover {
 .public-page {
   width: 100%;
   display: grid;
-  gap: var(--space-8);
+  gap: 0;
 }
 
 .public-section {
@@ -300,6 +300,10 @@ a:hover {
 .public-section--bordered {
   padding-top: var(--space-12);
   border-top: 1px solid var(--color-border);
+}
+
+.public-section--trust {
+  padding-bottom: var(--space-8);
 }
 
 .public-section__title {
@@ -369,6 +373,10 @@ a:hover {
   flex-wrap: wrap;
   gap: var(--space-4);
   margin-top: var(--space-6);
+}
+
+.public-actions--trust {
+  margin-top: var(--space-4);
 }
 
 .public-hero {
