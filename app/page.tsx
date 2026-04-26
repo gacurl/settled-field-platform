@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -134,6 +134,16 @@ export default function HomePage() {
             See how the summit is structured, what the themes cover, and how the
             experience is built to move people from reflection into action.
           </p>
+        </div>
+        <div className="public-image-band">
+          <div className="public-image-frame public-image-frame--band public-image-frame--editorial">
+            <Image
+              alt="Bill standing on a navy flight deck, reinforcing the summit's leadership and transition context."
+              height="582"
+              src="/assets/images/bill-navy-flight-deck.jpg"
+              width="581"
+            />
+          </div>
         </div>
         <div className="public-actions">
           <Link className="public-link" href="/summit">
