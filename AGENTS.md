@@ -2,7 +2,7 @@
 
 ## Core Identity
 
-This project is a **conversion system**, not a general website.
+This project is a **conversion system with a controlled content layer**, not a general website.
 
 Primary objective:
 Move users from attention → trust → decision → commitment.
@@ -11,15 +11,11 @@ Move users from attention → trust → decision → commitment.
 
 ## Source of Truth Hierarchy
 
-When instructions conflict, use this order:
-
 1. Direct user instruction (current task)
 2. AGENTS.md
 3. Actual repo state
 4. docs/codex/PROJECT_MEMORY.md
 5. docs/codex/CURRENT_STATE.md
-
-Docs provide context, not authority over instructions or code.
 
 ---
 
@@ -52,42 +48,59 @@ Stop immediately if a change risks:
 
 ---
 
-## Public Site Conversion Rules (LOCKED)
+## CMS Evolution Rule (NEW)
 
-Landing experience MUST follow:
+The system is evolving to include a **minimal CMS layer**.
 
-Hero → CTA → Trust → Supporting detail → CTA
+Allowed:
 
-Rules:
+* structured content storage (DB or JSON)
+* rendering pages from content source
+* defining editable content boundaries
 
-* Do not add new sections unless explicitly required
-* Do not duplicate messaging across sections
-* Each section must introduce new value
-* Trust must appear before deeper explanation
-* CTA placement must feel intentional, not repetitive
-* Preserve tone:
+NOT allowed:
 
-  * strong headline
-  * calm body
-  * direct CTA
+* full CMS UI/editor
+* page builders
+* layout control systems
+* content sprawl
+
+Rule:
+
+```text
+content may move out of code, but behavior must remain predictable
+```
 
 ---
 
-## Current Priority — Meeting-Ready Public Site
+## Public Site Conversion Rules (LOCKED)
 
-The system is in a **presentation refinement phase**.
+Hero → CTA → Trust → Supporting detail → CTA
+
+* Do not duplicate messaging
+* Each section must introduce new value
+* Trust precedes detail
+* CTA must be intentional
+
+---
+
+## Current Priority — CMS Foundation Phase (UPDATED)
 
 Focus:
 
+* lead capture
+* owner operability
+* structured content
 * clarity
-* flow
-* trust
-* visual rhythm
+
+Allowed expansion:
+
+* admin usability (accounts + visibility)
+* content source-of-truth
 
 Do NOT:
 
 * restart payment work
-* expand admin features
 * introduce new product ideas
 * redesign stable components
 
@@ -99,28 +112,14 @@ Do NOT:
 * Branch naming: `issue-X-Y-description`
 * Commit format: `Issue X-Y: <plain English>`
 
-Before starting a new issue:
-
-1. Commit current work
-2. Create PR
-3. Merge PR
-4. Delete branch locally
-5. Pull fresh main
-
-Do not skip this sequence.
-
 ---
 
 ## Testing Discipline
 
-For any user-facing change:
-
-1. Run automated checks
-2. Manually verify full user path
-3. Confirm no regression to existing site content
-4. Confirm scope was respected
-
-CI passing is not sufficient alone.
+1. Automated checks
+2. Manual full user path
+3. No regression to content
+4. Scope respected
 
 ---
 
@@ -131,44 +130,28 @@ Return:
 1. Focused diff summary
 2. Files changed
 3. Why it works
-4. Risks / edge cases
-5. Tests run
-6. Manual verification steps
-7. Commit message (only when complete)
+4. Risks
+5. Tests
+6. Manual verification
+7. Commit message
 
 ---
 
 ## Stop Conditions
 
-Stop immediately if:
+Stop if:
 
-* scope expands beyond issue
-* security posture weakens
-* auth boundaries weaken
-* dependency required without approval
-* instructions are ambiguous enough to risk the system
-
-Report:
-
-* what was attempted
-* what is blocked
-* smallest safe next step
+* scope expands
+* CMS becomes full platform
+* content is hardcoded where it shouldn’t be
+* auth weakens
 
 ---
 
 ## Isolation Rule
 
-This project is isolated.
-
-Do NOT:
-
-* import patterns from other repos
-* assume shared architecture
-
-Only use:
+Use ONLY:
 
 * AGENTS.md
 * PROJECT_MEMORY.md
 * CURRENT_STATE.md
-
-If unsure — ask before acting.
