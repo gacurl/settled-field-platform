@@ -59,5 +59,5 @@ export async function submitRegistration(
   const draft = buildRegistrationDraft(values);
   await writeRegistrationDraft(draft);
 
-  redirect("/confirmation");
+  redirect("/register/success");
 }

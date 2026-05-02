@@ -21,38 +21,15 @@ function normalizeSingleLine(value: string) {
   return value.trim().replace(/\s+/g, " ");
 }
 
-function normalizeMultiline(value: string) {
-  return value
-    .replace(/\r\n/g, "\n")
-    .split("\n")
-    .map((line) => line.trim())
-    .join("\n")
-    .trim();
-}
-
 function asRegistrationValues(
   value: Partial<Record<keyof RegistrationFormValues, unknown>>,
 ): RegistrationFormValues {
   return {
-    firstName:
-      typeof value.firstName === "string"
-        ? normalizeSingleLine(value.firstName)
-        : "",
-    lastName:
-      typeof value.lastName === "string" ? normalizeSingleLine(value.lastName) : "",
+    name: typeof value.name === "string" ? normalizeSingleLine(value.name) : "",
     email:
       typeof value.email === "string"
         ? normalizeSingleLine(value.email).toLowerCase()
         : "",
-    phone:
-      typeof value.phone === "string" ? normalizeSingleLine(value.phone) : "",
-    organization:
-      typeof value.organization === "string"
-        ? normalizeSingleLine(value.organization)
-        : "",
-    role: typeof value.role === "string" ? normalizeSingleLine(value.role) : "",
-    notes:
-      typeof value.notes === "string" ? normalizeMultiline(value.notes) : "",
   };
 }
 
@@ -60,13 +37,8 @@ export function normalizeRegistrationValues(
   formData: FormData,
 ): RegistrationFormValues {
   return asRegistrationValues({
-    firstName: getStringValue(formData, "firstName"),
-    lastName: getStringValue(formData, "lastName"),
+    name: getStringValue(formData, "name"),
     email: getStringValue(formData, "email"),
-    phone: getStringValue(formData, "phone"),
-    organization: getStringValue(formData, "organization"),
-    role: getStringValue(formData, "role"),
-    notes: getStringValue(formData, "notes"),
   });
 }
 
@@ -75,12 +47,8 @@ export function validateRegistrationValues(
 ): RegisterFormState["fieldErrors"] {
   const fieldErrors: RegisterFormState["fieldErrors"] = {};
 
-  if (!values.firstName) {
-    fieldErrors.firstName = "Enter your first name.";
-  }
-
-  if (!values.lastName) {
-    fieldErrors.lastName = "Enter your last name.";
+  if (!values.name) {
+    fieldErrors.name = "Enter your name.";
   }
 
   if (!values.email) {

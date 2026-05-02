@@ -17,9 +17,7 @@ export default async function RegisterSuccessPage() {
           You&apos;re on the list.
         </h1>
         <p className="register-success-page__lede">
-          {draft.firstName} {draft.lastName}, we&apos;ve received your
-          registration. We&apos;ll follow up with event details, updates, and
-          next steps.
+          We&apos;ll share Summit updates as details are confirmed.
         </p>
       </div>
 
@@ -27,20 +25,18 @@ export default async function RegisterSuccessPage() {
         <section className="register-success-section">
           <h2>What happens next</h2>
           <ol className="register-success-list">
-            <li>Your registration details are saved.</li>
-            <li>We&apos;ll share updates as event planning progresses.</li>
-            <li>You&apos;ll receive next steps directly from the summit team.</li>
+            <li>Your interest is saved in the registration system.</li>
+            <li>We&apos;ll share Summit updates as details are confirmed.</li>
+            <li>No payment step is required right now.</li>
           </ol>
         </section>
 
         <section className="register-success-section">
-          <h2>Registration summary</h2>
+          <h2>Saved details</h2>
+          <p>{draft.name}</p>
           <p>{draft.email}</p>
-          {draft.organization ? <p>{draft.organization}</p> : null}
-          {draft.role ? <p>{draft.role}</p> : null}
           <p className="register-success-section__note">
-            Need to adjust something? Return to registration and update your
-            details.
+            Need to adjust something? Return to registration and submit again.
           </p>
         </section>
       </div>
@@ -49,16 +45,16 @@ export default async function RegisterSuccessPage() {
         <div className="register-success-actions__content">
           <h2>Keep moving</h2>
           <p>
-            Review the summit details again or return to registration if you
+            Review the Summit details again or return to registration if you
             want to change anything before we follow up.
           </p>
         </div>
         <div className="register-success-actions__links">
-          <Link className="register-success-actions__primary" href="/confirmation">
-            View Confirmation
+          <Link className="register-success-actions__primary" href="/summit">
+            Back to Summit
           </Link>
           <Link className="register-success-actions__secondary" href="/register">
-            Edit Registration
+            Register Again
           </Link>
         </div>
       </section>
