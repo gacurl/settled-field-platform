@@ -21,10 +21,10 @@ export default async function AdminAttendeesPage() {
       <section className="admin-hero">
         <div className="admin-hero__content">
           <p className="admin-page__eyebrow">Admin</p>
-          <h1 className="admin-page__title">Attendees</h1>
+          <h1 className="admin-page__title">Interest list</h1>
           <p className="admin-page__lede">
-            Review who has registered so far and keep the summit operator view
-            grounded in the current registration record.
+            Review captured interest without leaving the admin area. This list
+            reflects the current registration record from newest to oldest.
           </p>
         </div>
 
@@ -35,17 +35,17 @@ export default async function AdminAttendeesPage() {
 
       <section className="admin-summary">
         <div className="admin-summary__item">
-          <p className="admin-summary__label">Registered attendees</p>
+          <p className="admin-summary__label">Captured interest</p>
           <p className="admin-summary__value">{registrations.length}</p>
         </div>
       </section>
 
       {registrations.length === 0 ? (
         <section className="admin-panel">
-          <h2>No attendees yet</h2>
+          <h2>No interest captured yet</h2>
           <p>
-            Registrations will appear here once people complete the current
-            summit registration flow.
+            Interest submissions will appear here once people complete the
+            current register-interest flow.
           </p>
         </section>
       ) : (
@@ -56,8 +56,7 @@ export default async function AdminAttendeesPage() {
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Organization</th>
-                  <th scope="col">Registered</th>
+                  <th scope="col">Submitted</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,9 +64,6 @@ export default async function AdminAttendeesPage() {
                   <tr key={registration.normalizedEmail}>
                     <td>{registration.fullName}</td>
                     <td>{registration.email}</td>
-                    <td>
-                      {registration.organizationOrAffiliation || "Not provided"}
-                    </td>
                     <td>{formatCreatedAt(registration.createdAt)}</td>
                   </tr>
                 ))}
