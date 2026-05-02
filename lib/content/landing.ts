@@ -3,7 +3,7 @@ export const landingContent = {
     eyebrow: "The Success Summit",
     title: "Find Your Direction — Keep Dominating",
     body:
-      "A focused experience for athletes and veterans navigating transition, built on alignment, clarity, and execution.",
+      "A focused summit for athletes, veterans, and leaders who need direction and a clear next move.",
     primaryCta: "View Summit",
     secondaryCta: "Register Interest",
   },
@@ -14,17 +14,17 @@ export const landingContent = {
       {
         title: "Who it is for",
         body:
-          "Athletes, veterans, and professionals carrying pressure, momentum, and a real next decision.",
+          "People carrying pressure, momentum, and a real next decision.",
       },
       {
         title: "What they get",
         body:
-          "Clear perspective, practical direction, and a room shaped around execution instead of noise.",
+          "Clear direction, practical perspective, and a room built for action.",
       },
       {
         title: "Why it is credible",
         body:
-          "The summit is structured around leadership, transition, and real-world application, not abstract motivation.",
+          "The summit is grounded in leadership, transition, and real-world application.",
       },
     ],
     primaryCta: "View Summit",
@@ -48,17 +48,17 @@ export const landingContent = {
       {
         title: "Mental Success",
         body:
-          "Build the mindset, discipline, and resilience needed to lead well under pressure.",
+          "Build resilience and steadiness under pressure.",
       },
       {
         title: "Transition Success",
         body:
-          "Navigate change with more clarity, better direction, and fewer avoidable missteps.",
+          "Move through change with more clarity and fewer false starts.",
       },
       {
         title: "Actions for Success",
         body:
-          "Leave with practical moves you can apply in work, leadership, and life after the event.",
+          "Leave with actions you can use right away.",
       },
     ],
   },
@@ -75,7 +75,7 @@ export const landingContent = {
     eyebrow: "Summit",
     heading: "A clear view of the full experience",
     body:
-      "See how the summit is structured, what the themes cover, and how the experience is built to move people from reflection into action.",
+      "See how the summit is organized and what you can expect from the experience.",
     cta: "Explore the Summit",
   },
   resources: {
@@ -85,17 +85,17 @@ export const landingContent = {
       {
         title: "Decision frameworks",
         body:
-          "Learn practical ways to sort through competing priorities and make the next move with more confidence.",
+          "Simple ways to sort priorities and make the next move with confidence.",
       },
       {
         title: "Leadership application",
         body:
-          "Take away ideas that apply to work, team settings, and transition moments beyond the event itself.",
+          "Ideas you can apply in work, team settings, and transition moments.",
       },
       {
         title: "Momentum tools",
         body:
-          "Leave with simple next-step thinking you can use immediately instead of a heavy content library.",
+          "Simple next-step tools you can use immediately.",
       },
     ],
   },
