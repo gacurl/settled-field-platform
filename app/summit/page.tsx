@@ -132,19 +132,28 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">{logisticsContent.summit.eyebrow}</p>
-        <h2 className="public-section__heading">{logisticsContent.summit.heading}</h2>
-        <p className="public-section__body">
-          {logisticsContent.summit.paragraphs[0]}
-        </p>
+        <h2 className="public-section__heading">{logisticsContent.heading}</h2>
+        <p className="public-section__body">{logisticsContent.subheading}</p>
+        <ul className="public-section__list">
+          {logisticsContent.details.map((detail) => (
+            <li key={detail.label}>
+              <strong>{detail.label}:</strong> {detail.value}
+            </li>
+          ))}
+        </ul>
+        <div className="public-actions">
+          {logisticsContent.actions.map((action) => (
+            <Link
+              key={action.label}
+              className={action.emphasis === "primary" ? "public-button" : "public-link"}
+              href={action.href}
+            >
+              {action.label}
+            </Link>
+          ))}
+        </div>
         <p className="public-section__body public-section__body--spaced">
-          {logisticsContent.summit.paragraphs[1]}
-        </p>
-        <p className="public-section__body public-section__body--spaced">
-          {logisticsContent.summit.paragraphs[2]}
-        </p>
-        <p className="public-section__body public-section__body--spaced">
-          {logisticsContent.summit.paragraphs[3]}
+          {logisticsContent.note}
         </p>
       </section>
 
