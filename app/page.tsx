@@ -63,6 +63,25 @@ export default function HomePage() {
       </section>
 
       <section className="public-section public-section--bordered">
+        <h2 className="public-section__heading">{partnersContent.landing.heading}</h2>
+        <p className="public-section__body">{partnersContent.landing.subheading}</p>
+        <div className="audience-grid audience-grid--full">
+          {partnersContent.landing.partners.map((partner) => (
+            <section className="audience-card" key={partner.name}>
+              <h3>{partner.name}</h3>
+              {partner.role ? <p>{partner.role}</p> : null}
+              <p>{partner.description}</p>
+            </section>
+          ))}
+        </div>
+        <div className="public-actions">
+          <Link className="public-link" href={partnersContent.landing.cta.href}>
+            {partnersContent.landing.cta.label}
+          </Link>
+        </div>
+      </section>
+
+      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">{landingContent.audience.eyebrow}</p>
         <h2 className="public-section__heading">{landingContent.audience.heading}</h2>
         <div className="audience-grid audience-grid--full">
@@ -128,19 +147,6 @@ export default function HomePage() {
         <div className="public-theme-grid">
           {landingContent.resources.cards.map((card) => (
             <section className="public-theme-card" key={card.title}>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
-            </section>
-          ))}
-        </div>
-      </section>
-
-      <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">{partnersContent.landing.eyebrow}</p>
-        <h2 className="public-section__heading">{partnersContent.landing.heading}</h2>
-        <div className="audience-grid audience-grid--full">
-          {partnersContent.landing.cards.map((card) => (
-            <section className="audience-card" key={card.title}>
               <h3>{card.title}</h3>
               <p>{card.body}</p>
             </section>

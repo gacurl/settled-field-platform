@@ -1,32 +1,66 @@
 export const partnersContent = {
   landing: {
-    eyebrow: "Partners",
-    heading: "Built to welcome credible support",
-    cards: [
+    heading: "Partners who fit the room",
+    subheading:
+      "These partners strengthen the summit with real alignment, real access, and credible support.",
+    partners: [
       {
-        title: "Logo-ready placement",
-        body:
-          "Future partner marks and outbound links can live here without changing the page structure.",
+        name: "University leaders",
+        role: "Student transition",
+        description:
+          "Relevant for students, veterans, and athletes moving into their next chapter.",
+        link: "",
       },
       {
-        title: "Mission-aligned support",
-        body:
-          "This space is reserved for organizations that strengthen the summit's leadership, transition, and performance focus.",
+        name: "Athletic departments",
+        role: "Leadership development",
+        description:
+          "Aligned with performance, identity, and leadership beyond competition.",
+        link: "",
       },
       {
-        title: "Placeholder-safe today",
-        body:
-          "Partner details are intentionally lightweight for now so the page stays credible before sponsor data is finalized.",
+        name: "Employers and sponsors",
+        role: "Career connection",
+        description:
+          "Able to support practical next steps, visibility, and long-term opportunity.",
+        link: "",
       },
     ],
+    cta: {
+      label: "Register Interest",
+      href: "/register",
+    },
   },
   summit: {
-    eyebrow: "For Partners & Sponsors",
-    heading: "A focused environment for meaningful connection",
-    paragraphs: [
-      "The summit creates direct access to an audience shaped by leadership, performance, transition, and long-term growth.",
-      "It offers a leadership-focused environment where sponsors and partners can connect with talent, build visibility, and participate in a credible conversation about what comes next.",
+    heading: "Relevant partners add trust to the experience",
+    subheading:
+      "The summit is built to include partners who understand leadership, transition, and long-term growth.",
+    partners: [
+      {
+        name: "Universities",
+        role: "Student and veteran support",
+        description:
+          "A strong fit for transition, mentorship, and next-step conversations.",
+        link: "",
+      },
+      {
+        name: "Athletic organizations",
+        role: "Performance and identity",
+        description:
+          "Relevant to athletes, coaches, and leaders navigating change.",
+        link: "",
+      },
+      {
+        name: "Mission-aligned employers",
+        role: "Opportunity and exposure",
+        description:
+          "Well positioned to connect with people ready for meaningful next moves.",
+        link: "",
+      },
     ],
-    cta: "Get Involved",
+    cta: {
+      label: "Get Involved",
+      href: "/register",
+    },
   },
 } as const;

@@ -115,16 +115,19 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">{partnersContent.summit.eyebrow}</p>
         <h2 className="public-section__heading">{partnersContent.summit.heading}</h2>
-        <p className="public-section__body">
-          {partnersContent.summit.paragraphs[0]}
-        </p>
-        <p className="public-section__body public-section__body--spaced">
-          {partnersContent.summit.paragraphs[1]}
-        </p>
-        <Link className="public-button" href="/register">
-          {partnersContent.summit.cta}
+        <p className="public-section__body">{partnersContent.summit.subheading}</p>
+        <div className="audience-grid audience-grid--full">
+          {partnersContent.summit.partners.map((partner) => (
+            <section className="audience-card" key={partner.name}>
+              <h3>{partner.name}</h3>
+              {partner.role ? <p>{partner.role}</p> : null}
+              <p>{partner.description}</p>
+            </section>
+          ))}
+        </div>
+        <Link className="public-button" href={partnersContent.summit.cta.href}>
+          {partnersContent.summit.cta.label}
         </Link>
       </section>
 
