@@ -1,6 +1,7 @@
 'use server';
 
 import { redirect } from "next/navigation";
+import { notifyOwnerOfRegistration } from "@/lib/registration-notifications";
 import { createRegistration } from "@/lib/registration-store";
 import {
   buildRegistrationDraft,
@@ -58,6 +59,15 @@ export async function submitRegistration(
 
   const draft = buildRegistrationDraft(values);
   await writeRegistrationDraft(draft);
+
+  try {
+    await notifyOwnerOfRegistration(values, draft);
+  } catch (error) {
+    console.error(
+      "Interest notification email failed",
+      error instanceof Error ? error.message : error,
+    );
+  }
 
   redirect("/register/success");
 }
