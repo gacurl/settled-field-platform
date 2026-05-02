@@ -55,14 +55,14 @@ export default async function AdminPage() {
 
       <section className="admin-grid" aria-label="Admin areas">
         <section className="admin-card">
-          <p className="admin-card__eyebrow">Attendees</p>
-          <h2 className="admin-card__title">Registration oversight</h2>
+          <p className="admin-card__eyebrow">Interest</p>
+          <h2 className="admin-card__title">Captured registrations</h2>
           <p className="admin-card__body">
-            View the current registration record and see who has already entered
-            the summit pipeline.
+            View the current interest list and confirm who has submitted name,
+            email, and registration time.
           </p>
           <Link className="admin-card__link" href="/admin/attendees">
-            View Attendees
+            View Interest List
           </Link>
         </section>
 
