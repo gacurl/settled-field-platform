@@ -2,7 +2,7 @@ export const summitContent = {
   hero: {
     title: "The Success Summit",
     body:
-      "A leadership and transition summit for athletes, veterans, and professionals navigating what's next.",
+      "A leadership and transition summit for people who need clarity on what comes next.",
     primaryCta: "Register Interest",
     secondaryCta: "View Landing",
   },
@@ -13,17 +13,17 @@ export const summitContent = {
       {
         title: "Leadership practitioners",
         body:
-          "Sessions are built to reflect real leadership pressure, decision-making, and transition work.",
+          "Sessions reflect real leadership pressure, decisions, and change.",
       },
       {
         title: "Athlete and veteran context",
         body:
-          "The summit is shaped for people moving out of structured environments and into what comes next.",
+          "Built for people moving out of structured environments and into the next chapter.",
       },
       {
         title: "Applied conversation",
         body:
-          "The emphasis is on perspective people can use, not inflated bios or generic inspiration.",
+          "The focus is practical perspective, not generic inspiration.",
       },
     ],
   },
@@ -31,8 +31,8 @@ export const summitContent = {
     eyebrow: "Event Overview",
     heading: "A structured summit with real-world relevance",
     paragraphs: [
-      "The Success Summit brings together people navigating leadership, transition, and performance after major shifts in identity, career, and direction.",
-      "It is built for athletes, veterans, university and athletic leaders, and professionals who want practical perspective, stronger alignment, and a credible room to connect in.",
+      "The Success Summit brings together people navigating leadership, transition, and performance after major change.",
+      "It is built for athletes, veterans, and leaders who want practical perspective and a clear next step.",
     ],
   },
   themes: {
@@ -42,17 +42,17 @@ export const summitContent = {
       {
         title: "Mental Success",
         body:
-          "Strengthen mindset, resilience, and identity under pressure and change.",
+          "Strengthen mindset and resilience under pressure.",
       },
       {
         title: "Transition Success",
         body:
-          "Clarify direction and align the next chapter with purpose, strengths, and opportunity.",
+          "Clarify direction for the next chapter.",
       },
       {
         title: "Actions for Success",
         body:
-          "Turn insight into practical next moves across leadership, career, and life.",
+          "Turn insight into practical next moves.",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const summitContent = {
   finalCta: {
     heading: "Be part of the summit conversation",
     body:
-      "Register interest now and receive event updates as details are finalized.",
+      "Register interest to receive summit updates as details are finalized.",
     primaryCta: "Register Interest",
     secondaryCta: "View Landing",
   },
