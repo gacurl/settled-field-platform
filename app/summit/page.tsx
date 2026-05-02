@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { logisticsContent } from "@/lib/content/logistics";
+import { partnersContent } from "@/lib/content/partners";
+import { summitContent } from "@/lib/content/summit";
 
 export default function SummitPage() {
   return (
@@ -7,17 +10,16 @@ export default function SummitPage() {
       <section className="public-section public-section--hero">
         <div className="public-hero page-wrapper--hero">
           <div className="public-hero__content">
-            <h1 className="public-section__title">The Success Summit</h1>
+            <h1 className="public-section__title">{summitContent.hero.title}</h1>
             <p className="public-section__body">
-              A leadership and transition summit for athletes, veterans, and
-              professionals navigating what&apos;s next.
+              {summitContent.hero.body}
             </p>
             <div className="public-actions">
               <Link className="public-button" href="/register">
-                Register Interest
+                {summitContent.hero.primaryCta}
               </Link>
               <Link className="public-link" href="/">
-                View Landing
+                {summitContent.hero.secondaryCta}
               </Link>
             </div>
           </div>
@@ -36,73 +38,39 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Speaker Perspective</p>
-        <h2 className="public-section__heading">Credibility comes from the room</h2>
+        <p className="public-section__eyebrow">{summitContent.speakerPerspective.eyebrow}</p>
+        <h2 className="public-section__heading">{summitContent.speakerPerspective.heading}</h2>
         <div className="public-theme-grid">
-          <section className="public-theme-card">
-            <h3>Leadership practitioners</h3>
-            <p>
-              Sessions are built to reflect real leadership pressure, decision-making,
-              and transition work.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Athlete and veteran context</h3>
-            <p>
-              The summit is shaped for people moving out of structured environments
-              and into what comes next.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Applied conversation</h3>
-            <p>
-              The emphasis is on perspective people can use, not inflated bios or
-              generic inspiration.
-            </p>
-          </section>
+          {summitContent.speakerPerspective.cards.map((card) => (
+            <section className="public-theme-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </section>
+          ))}
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Event Overview</p>
-        <h2 className="public-section__heading">A structured summit with real-world relevance</h2>
+        <p className="public-section__eyebrow">{summitContent.overview.eyebrow}</p>
+        <h2 className="public-section__heading">{summitContent.overview.heading}</h2>
         <p className="public-section__body">
-          The Success Summit brings together people navigating leadership,
-          transition, and performance after major shifts in identity, career,
-          and direction.
+          {summitContent.overview.paragraphs[0]}
         </p>
         <p className="public-section__body public-section__body--spaced">
-          It is built for athletes, veterans, university and athletic leaders,
-          and professionals who want practical perspective, stronger alignment,
-          and a credible room to connect in.
+          {summitContent.overview.paragraphs[1]}
         </p>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Three Themes</p>
-        <h2 className="public-section__heading">Focused on what drives forward motion</h2>
+        <p className="public-section__eyebrow">{summitContent.themes.eyebrow}</p>
+        <h2 className="public-section__heading">{summitContent.themes.heading}</h2>
         <div className="public-theme-grid">
-          <section className="public-theme-card">
-            <h3>Mental Success</h3>
-            <p>
-              Strengthen mindset, resilience, and identity under pressure and
-              change.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Transition Success</h3>
-            <p>
-              Clarify direction and align the next chapter with purpose,
-              strengths, and opportunity.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Actions for Success</h3>
-            <p>
-              Turn insight into practical next moves across leadership, career,
-              and life.
-            </p>
-          </section>
+          {summitContent.themes.cards.map((card) => (
+            <section className="public-theme-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </section>
+          ))}
         </div>
       </section>
 
@@ -120,92 +88,74 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Program Structure</p>
-        <h2 className="public-section__heading">Three days, three focused tracks</h2>
+        <p className="public-section__eyebrow">{summitContent.programStructure.eyebrow}</p>
+        <h2 className="public-section__heading">{summitContent.programStructure.heading}</h2>
         <div className="public-theme-grid">
-          <section className="public-theme-card">
-            <h3>Day 1 — Mental + Identity</h3>
-            <ul className="public-section__list">
-              <li>Mindset, resilience, and personal leadership</li>
-              <li>Identity shifts after sport, service, or role change</li>
-            </ul>
-          </section>
-          <section className="public-theme-card">
-            <h3>Day 2 — Transition + Alignment</h3>
-            <ul className="public-section__list">
-              <li>Career direction, alignment, and next-step clarity</li>
-              <li>Leadership conversations across education, sport, and industry</li>
-            </ul>
-          </section>
-          <section className="public-theme-card">
-            <h3>Day 3 — Action + Execution</h3>
-            <ul className="public-section__list">
-              <li>Practical strategies for momentum after the summit</li>
-              <li>Execution planning, accountability, and connection</li>
-            </ul>
-          </section>
+          {summitContent.programStructure.cards.map((card) => (
+            <section className="public-theme-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <ul className="public-section__list">
+                {card.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Outcomes</p>
-        <h2 className="public-section__heading">What the experience is built to deliver</h2>
+        <p className="public-section__eyebrow">{summitContent.outcomes.eyebrow}</p>
+        <h2 className="public-section__heading">{summitContent.outcomes.heading}</h2>
         <ul className="public-section__list">
-          <li>clarify the next move</li>
-          <li>strengthen leadership under change</li>
-          <li>leave with practical actions to execute</li>
+          {summitContent.outcomes.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Logistics</p>
-        <h2 className="public-section__heading">Built for a credible live gathering</h2>
+        <p className="public-section__eyebrow">{logisticsContent.summit.eyebrow}</p>
+        <h2 className="public-section__heading">{logisticsContent.summit.heading}</h2>
         <p className="public-section__body">
-          Location: Indianapolis, IN
+          {logisticsContent.summit.paragraphs[0]}
         </p>
         <p className="public-section__body public-section__body--spaced">
-          Venue: TBD
+          {logisticsContent.summit.paragraphs[1]}
         </p>
         <p className="public-section__body public-section__body--spaced">
-          Final venue and schedule details will be released to registered
-          attendees.
+          {logisticsContent.summit.paragraphs[2]}
         </p>
         <p className="public-section__body public-section__body--spaced">
-          The format is designed to support university, athletic, and
-          leadership partnership opportunities without overextending the event
-          promise.
+          {logisticsContent.summit.paragraphs[3]}
         </p>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">For Partners & Sponsors</p>
-        <h2 className="public-section__heading">A focused environment for meaningful connection</h2>
+        <p className="public-section__eyebrow">{partnersContent.summit.eyebrow}</p>
+        <h2 className="public-section__heading">{partnersContent.summit.heading}</h2>
         <p className="public-section__body">
-          The summit creates direct access to an audience shaped by leadership,
-          performance, transition, and long-term growth.
+          {partnersContent.summit.paragraphs[0]}
         </p>
         <p className="public-section__body public-section__body--spaced">
-          It offers a leadership-focused environment where sponsors and
-          partners can connect with talent, build visibility, and participate
-          in a credible conversation about what comes next.
+          {partnersContent.summit.paragraphs[1]}
         </p>
         <Link className="public-button" href="/register">
-          Get Involved
+          {partnersContent.summit.cta}
         </Link>
       </section>
 
       <section className="public-section public-section--bordered">
-        <h2 className="public-section__heading">Be part of the summit conversation</h2>
+        <h2 className="public-section__heading">{summitContent.finalCta.heading}</h2>
         <p className="public-section__body">
-          Register interest now and receive event updates as details are
-          finalized.
+          {summitContent.finalCta.body}
         </p>
         <div className="public-actions">
           <Link className="public-button" href="/register">
-            Register Interest
+            {summitContent.finalCta.primaryCta}
           </Link>
           <Link className="public-link" href="/">
-            View Landing
+            {summitContent.finalCta.secondaryCta}
           </Link>
         </div>
       </section>
