@@ -38,6 +38,17 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">{summitContent.overview.eyebrow}</p>
+        <h2 className="public-section__heading">{summitContent.overview.heading}</h2>
+        <p className="public-section__body">
+          {summitContent.overview.paragraphs[0]}
+        </p>
+        <p className="public-section__body public-section__body--spaced">
+          {summitContent.overview.paragraphs[1]}
+        </p>
+      </section>
+
+      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">{summitContent.speakerPerspective.eyebrow}</p>
         <h2 className="public-section__heading">{summitContent.speakerPerspective.heading}</h2>
         <div className="public-theme-grid">
@@ -48,17 +59,6 @@ export default function SummitPage() {
             </section>
           ))}
         </div>
-      </section>
-
-      <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">{summitContent.overview.eyebrow}</p>
-        <h2 className="public-section__heading">{summitContent.overview.heading}</h2>
-        <p className="public-section__body">
-          {summitContent.overview.paragraphs[0]}
-        </p>
-        <p className="public-section__body public-section__body--spaced">
-          {summitContent.overview.paragraphs[1]}
-        </p>
       </section>
 
       <section className="public-section public-section--bordered">
@@ -115,6 +115,20 @@ export default function SummitPage() {
       </section>
 
       <section className="public-section public-section--bordered">
+        <p className="public-section__eyebrow">{partnersContent.summit.eyebrow}</p>
+        <h2 className="public-section__heading">{partnersContent.summit.heading}</h2>
+        <p className="public-section__body">
+          {partnersContent.summit.paragraphs[0]}
+        </p>
+        <p className="public-section__body public-section__body--spaced">
+          {partnersContent.summit.paragraphs[1]}
+        </p>
+        <Link className="public-button" href="/register">
+          {partnersContent.summit.cta}
+        </Link>
+      </section>
+
+      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">{logisticsContent.summit.eyebrow}</p>
         <h2 className="public-section__heading">{logisticsContent.summit.heading}</h2>
         <p className="public-section__body">
@@ -129,20 +143,6 @@ export default function SummitPage() {
         <p className="public-section__body public-section__body--spaced">
           {logisticsContent.summit.paragraphs[3]}
         </p>
-      </section>
-
-      <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">{partnersContent.summit.eyebrow}</p>
-        <h2 className="public-section__heading">{partnersContent.summit.heading}</h2>
-        <p className="public-section__body">
-          {partnersContent.summit.paragraphs[0]}
-        </p>
-        <p className="public-section__body public-section__body--spaced">
-          {partnersContent.summit.paragraphs[1]}
-        </p>
-        <Link className="public-button" href="/register">
-          {partnersContent.summit.cta}
-        </Link>
       </section>
 
       <section className="public-section public-section--bordered">
