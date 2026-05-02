@@ -27,8 +27,8 @@ export default async function RegisterPage({
           Register your interest.
         </h1>
         <p className="register-page__lede">
-          Share a few details to reserve your spot. We&apos;ll follow up with
-          event details, updates, and next steps for the summit.
+          Share your name and email to join the list. We&apos;ll follow up with
+          Summit updates as details are confirmed.
         </p>
 
         {error === "draft" ? (
@@ -65,13 +65,13 @@ export default async function RegisterPage({
           <section className="register-panel">
             <h2>What happens next</h2>
             <ol>
-              <li>Complete your registration details.</li>
-              <li>We save your interest and reserve your spot.</li>
-              <li>We follow up with details, updates, and next steps.</li>
+              <li>Share your name and email.</li>
+              <li>We save your interest in the existing registration system.</li>
+              <li>We follow up with Summit updates as details are confirmed.</li>
             </ol>
             <p className="register-panel__note">
-              If you&apos;re still deciding, that&apos;s fine. This form keeps the
-              next step simple and gives us a clear way to follow up.
+              If you&apos;re still deciding, that&apos;s fine. This keeps the next
+              step simple and gives us a clear way to follow up.
             </p>
           </section>
         </aside>

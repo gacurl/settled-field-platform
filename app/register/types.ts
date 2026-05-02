@@ -1,11 +1,6 @@
 export type RegistrationFormValues = {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
-  phone: string;
-  organization: string;
-  role: string;
-  notes: string;
 };
 
 export type RegistrationDraft = RegistrationFormValues & {
@@ -23,11 +18,6 @@ export type DuplicateRegistrationStatus = "created" | "duplicate";
 export const REGISTRATION_HONEYPOT_FIELD = "website";
 
 export const EMPTY_REGISTRATION_FORM_VALUES: RegistrationFormValues = {
-  firstName: "",
-  lastName: "",
+  name: "",
   email: "",
-  phone: "",
-  organization: "",
-  role: "",
-  notes: "",
 };

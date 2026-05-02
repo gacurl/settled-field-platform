@@ -24,10 +24,6 @@ type RegistrationRow = {
   organization_or_affiliation: string | null;
 };
 
-function buildFullName(values: RegistrationFormValues) {
-  return `${values.firstName} ${values.lastName}`.trim();
-}
-
 export async function initializeRegistrationStore() {
   if (!registrationsTablePromise) {
     registrationsTablePromise = getDb()
@@ -78,10 +74,10 @@ export async function createRegistration(
         organization_or_affiliation
       ) VALUES ($1, $2, $3, $4)`,
       [
-        buildFullName(values),
+        values.name,
         values.email,
         values.email,
-        values.organization || null,
+        null,
       ],
     );
 

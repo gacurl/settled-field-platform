@@ -128,20 +128,11 @@ export function RegisterForm({
 
       <div className="register-form__grid">
         <RegisterField
-          autoComplete="given-name"
-          defaultValue={defaultValues.firstName}
-          error={state.fieldErrors.firstName}
-          label="First name"
-          name="firstName"
-          required
-        />
-
-        <RegisterField
-          autoComplete="family-name"
-          defaultValue={defaultValues.lastName}
-          error={state.fieldErrors.lastName}
-          label="Last name"
-          name="lastName"
+          autoComplete="name"
+          defaultValue={defaultValues.name}
+          error={state.fieldErrors.name}
+          label="Name"
+          name="name"
           required
         />
 
@@ -155,42 +146,14 @@ export function RegisterForm({
           required
           type="email"
         />
-
-        <RegisterField
-          autoComplete="tel"
-          defaultValue={defaultValues.phone}
-          inputMode="tel"
-          label="Phone"
-          name="phone"
-          type="tel"
-        />
-
-        <RegisterField
-          defaultValue={defaultValues.organization}
-          label="Organization / School / Team"
-          name="organization"
-        />
-
-        <RegisterField
-          defaultValue={defaultValues.role}
-          label="Role or affiliation"
-          name="role"
-        />
-
-        <RegisterField
-          defaultValue={defaultValues.notes}
-          label="What are you hoping to get from the summit?"
-          name="notes"
-          rows={5}
-        />
       </div>
 
       <div className="register-cta">
         <div className="register-cta__content">
-          <h2>Reserve your spot</h2>
+          <h2>Register your interest</h2>
           <p>
-            Register your interest now. We&apos;ll save your details and follow
-            up with event information, updates, and next steps.
+            Share your name and email. We&apos;ll save your interest and follow up
+            with Summit updates as details are confirmed.
           </p>
         </div>
         <button
