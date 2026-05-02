@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
+import { landingContent } from "@/lib/content/landing";
+import { partnersContent } from "@/lib/content/partners";
 
 export default function HomePage() {
   return (
@@ -15,23 +17,22 @@ export default function HomePage() {
 
             <div className="public-hero-poster__overlay">
               <div className="public-hero-poster__content">
-                <p className="public-section__eyebrow">The Success Summit</p>
+                <p className="public-section__eyebrow">{landingContent.hero.eyebrow}</p>
 
                 <h1 className="public-section__title">
-                  Find Your Direction — Keep Dominating
+                  {landingContent.hero.title}
                 </h1>
 
                 <p className="public-section__body public-section__body--spaced">
-                  A focused experience for athletes and veterans navigating transition,
-                  built on alignment, clarity, and execution.
+                  {landingContent.hero.body}
                 </p>
 
                 <div className="public-actions">
                   <Link href="/summit" className="public-button">
-                    View Summit
+                    {landingContent.hero.primaryCta}
                   </Link>
                   <Link href="/register" className="public-link public-link--on-dark">
-                    Register Interest
+                    {landingContent.hero.secondaryCta}
                   </Link>
                 </div>
               </div>
@@ -41,98 +42,67 @@ export default function HomePage() {
       </section>
 
       <section className="public-section public-section--bordered public-section--trust">
-        <p className="public-section__eyebrow">Why This Room Matters</p>
-        <h2 className="public-section__heading">Built for real transition, not generic advice</h2>
+        <p className="public-section__eyebrow">{landingContent.trust.eyebrow}</p>
+        <h2 className="public-section__heading">{landingContent.trust.heading}</h2>
         <div className="audience-grid audience-grid--full">
-          <section className="audience-card">
-            <h3>Who it is for</h3>
-            <p>
-              Athletes, veterans, and professionals carrying pressure, momentum,
-              and a real next decision.
-            </p>
-          </section>
-          <section className="audience-card">
-            <h3>What they get</h3>
-            <p>
-              Clear perspective, practical direction, and a room shaped around
-              execution instead of noise.
-            </p>
-          </section>
-          <section className="audience-card">
-            <h3>Why it is credible</h3>
-            <p>
-              The summit is structured around leadership, transition, and
-              real-world application, not abstract motivation.
-            </p>
-          </section>
+          {landingContent.trust.cards.map((card) => (
+            <section className="audience-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </section>
+          ))}
         </div>
         <div className="public-actions public-actions--trust">
           <Link className="public-button" href="/summit">
-            View Summit
+            {landingContent.trust.primaryCta}
           </Link>
           <Link className="public-link" href="/register">
-            Register Interest
+            {landingContent.trust.secondaryCta}
           </Link>
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Who It&apos;s For</p>
-        <h2 className="public-section__heading">A focused room for people navigating what&apos;s next</h2>
+        <p className="public-section__eyebrow">{landingContent.audience.eyebrow}</p>
+        <h2 className="public-section__heading">{landingContent.audience.heading}</h2>
         <div className="audience-grid audience-grid--full">
-          <div className="audience-card">Student Veterans</div>
-          <div className="audience-card">Veterans</div>
-          <div className="audience-card">Student-Athletes</div>
-          <div className="audience-card">Athletic Leaders</div>
-          <div className="audience-card">Corporate Professionals</div>
+          {landingContent.audience.items.map((item) => (
+            <div className="audience-card" key={item}>
+              {item}
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Three Themes</p>
-        <h2 className="public-section__heading">Focused on what moves people forward</h2>
+        <p className="public-section__eyebrow">{landingContent.themes.eyebrow}</p>
+        <h2 className="public-section__heading">{landingContent.themes.heading}</h2>
         <div className="public-theme-grid">
-          <section className="public-theme-card">
-            <h3>Mental Success</h3>
-            <p>
-              Build the mindset, discipline, and resilience needed to lead well
-              under pressure.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Transition Success</h3>
-            <p>
-              Navigate change with more clarity, better direction, and fewer
-              avoidable missteps.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Actions for Success</h3>
-            <p>
-              Leave with practical moves you can apply in work, leadership, and
-              life after the event.
-            </p>
-          </section>
+          {landingContent.themes.cards.map((card) => (
+            <section className="public-theme-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </section>
+          ))}
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">What You&apos;ll Gain</p>
-        <h2 className="public-section__heading">Practical value you can act on</h2>
+        <p className="public-section__eyebrow">{landingContent.gains.eyebrow}</p>
+        <h2 className="public-section__heading">{landingContent.gains.heading}</h2>
         <ul className="public-section__list">
-          <li>leave with clearer direction</li>
-          <li>turn pressure into practical next steps</li>
-          <li>build stronger alignment for what comes next</li>
+          {landingContent.gains.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </section>
 
       <section className="public-section public-section--bordered public-section--centered">
-        <p className="public-section__eyebrow">Summit</p>
-        <h2 className="public-section__heading">A clear view of the full experience</h2>
+        <p className="public-section__eyebrow">{landingContent.summitPreview.eyebrow}</p>
+        <h2 className="public-section__heading">{landingContent.summitPreview.heading}</h2>
         <div className="public-section__copy">
           <p className="public-section__body">
-            See how the summit is structured, what the themes cover, and how the
-            experience is built to move people from reflection into action.
+            {landingContent.summitPreview.body}
           </p>
         </div>
         <div className="public-image-band">
@@ -147,78 +117,48 @@ export default function HomePage() {
         </div>
         <div className="public-actions">
           <Link className="public-link" href="/summit">
-            Explore the Summit
+            {landingContent.summitPreview.cta}
           </Link>
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Resources</p>
-        <h2 className="public-section__heading">Practical takeaways, previewed simply</h2>
+        <p className="public-section__eyebrow">{landingContent.resources.eyebrow}</p>
+        <h2 className="public-section__heading">{landingContent.resources.heading}</h2>
         <div className="public-theme-grid">
-          <section className="public-theme-card">
-            <h3>Decision frameworks</h3>
-            <p>
-              Learn practical ways to sort through competing priorities and make
-              the next move with more confidence.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Leadership application</h3>
-            <p>
-              Take away ideas that apply to work, team settings, and transition
-              moments beyond the event itself.
-            </p>
-          </section>
-          <section className="public-theme-card">
-            <h3>Momentum tools</h3>
-            <p>
-              Leave with simple next-step thinking you can use immediately instead
-              of a heavy content library.
-            </p>
-          </section>
+          {landingContent.resources.cards.map((card) => (
+            <section className="public-theme-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </section>
+          ))}
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">Partners</p>
-        <h2 className="public-section__heading">Built to welcome credible support</h2>
+        <p className="public-section__eyebrow">{partnersContent.landing.eyebrow}</p>
+        <h2 className="public-section__heading">{partnersContent.landing.heading}</h2>
         <div className="audience-grid audience-grid--full">
-          <section className="audience-card">
-            <h3>Logo-ready placement</h3>
-            <p>
-              Future partner marks and outbound links can live here without
-              changing the page structure.
-            </p>
-          </section>
-          <section className="audience-card">
-            <h3>Mission-aligned support</h3>
-            <p>
-              This space is reserved for organizations that strengthen the summit&apos;s
-              leadership, transition, and performance focus.
-            </p>
-          </section>
-          <section className="audience-card">
-            <h3>Placeholder-safe today</h3>
-            <p>
-              Partner details are intentionally lightweight for now so the page
-              stays credible before sponsor data is finalized.
-            </p>
-          </section>
+          {partnersContent.landing.cards.map((card) => (
+            <section className="audience-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+            </section>
+          ))}
         </div>
       </section>
 
       <section className="public-section public-section--bordered">
-        <h2 className="public-section__heading">Take the next step with intention</h2>
+        <h2 className="public-section__heading">{landingContent.finalCta.heading}</h2>
         <p className="public-section__body">
-          Review the summit details, then register your interest.
+          {landingContent.finalCta.body}
         </p>
         <div className="public-actions">
           <Link className="public-button" href="/summit">
-            View Summit
+            {landingContent.finalCta.primaryCta}
           </Link>
           <Link className="public-link" href="/register">
-            Register Interest
+            {landingContent.finalCta.secondaryCta}
           </Link>
         </div>
       </section>
