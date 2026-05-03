@@ -30,17 +30,6 @@ export const landingContent = {
     primaryCta: "View Summit",
     secondaryCta: "Register Interest",
   },
-  audience: {
-    eyebrow: "Who It's For",
-    heading: "A focused room for people navigating what's next",
-    items: [
-      "Student Veterans",
-      "Veterans",
-      "Student-Athletes",
-      "Athletic Leaders",
-      "Corporate Professionals",
-    ],
-  },
   themes: {
     eyebrow: "Three Themes",
     heading: "Focused on what moves people forward",
