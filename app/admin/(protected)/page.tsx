@@ -15,12 +15,7 @@ export default async function AdminPage() {
       <section className="admin-hero">
         <div className="admin-hero__content">
           <p className="admin-page__eyebrow">Admin</p>
-          <h1 className="admin-page__title">Summit control is ready.</h1>
-          <p className="admin-page__lede">
-            This shell gives Settled on the Field a protected operator space for
-            attendee status, speaker coordination, content links, and settings
-            work that will come online in later issues.
-          </p>
+          <h1 className="admin-page__title">Admin dashboard</h1>
         </div>
 
         <form action="/api/admin/logout" method="post">
@@ -43,43 +38,29 @@ export default async function AdminPage() {
           <p className="admin-summary__label">Access</p>
           <p className="admin-summary__value">Protected</p>
         </div>
-        <div className="admin-summary__item">
-          <p className="admin-summary__label">Operator model</p>
-          <p className="admin-summary__value">Small team</p>
-        </div>
-        <div className="admin-summary__item">
-          <p className="admin-summary__label">Current phase</p>
-          <p className="admin-summary__value">Dashboard shell</p>
-        </div>
       </section>
 
       <section className="admin-grid" aria-label="Admin areas">
         <section className="admin-card">
           <p className="admin-card__eyebrow">Interest</p>
-          <h2 className="admin-card__title">Captured registrations</h2>
-          <p className="admin-card__body">
-            View the current interest list and confirm who has submitted name,
-            email, and registration time.
-          </p>
+          <h2 className="admin-card__title">Interest list</h2>
+          <p className="admin-card__body">Review current registrations.</p>
           <Link className="admin-card__link" href="/admin/attendees">
-            View Interest List
+            View interest
           </Link>
         </section>
 
         {isOwner ? (
           <section className="admin-card">
             <p className="admin-card__eyebrow">Team access</p>
-            <h2 className="admin-card__title">Helper account management</h2>
-            <p className="admin-card__body">
-              Add helper accounts, review current access, and disable sign-in
-              when someone should no longer use the admin area.
-            </p>
+            <h2 className="admin-card__title">Admin accounts</h2>
+            <p className="admin-card__body">Manage owner and admin access.</p>
             <Link className="admin-card__link" href="/admin/users">
-              Manage Team Access
+              Manage accounts
             </Link>
             <br />
             <Link className="admin-card__link" href="/admin/requests">
-              Review Access Requests
+              Review requests
             </Link>
           </section>
         ) : null}
@@ -87,41 +68,23 @@ export default async function AdminPage() {
         <section className="admin-card">
           <p className="admin-card__eyebrow">Speakers</p>
           <h2 className="admin-card__title">Speaker coordination</h2>
-          <p className="admin-card__body">
-            Reserved for speaker details, scheduling notes, and operational
-            visibility. CRUD and persistence are intentionally out of scope here.
-          </p>
+          <p className="admin-card__body">Speaker operations are not live yet.</p>
           <p className="admin-card__status">Placeholder only</p>
         </section>
 
         <section className="admin-card">
           <p className="admin-card__eyebrow">Content</p>
-          <h2 className="admin-card__title">Links and publishing surfaces</h2>
-          <p className="admin-card__body">
-            This shell keeps a clear home for content links, summit resources,
-            and future publishing controls without wiring those features yet.
-          </p>
+          <h2 className="admin-card__title">Content links</h2>
+          <p className="admin-card__body">Content tools are not live yet.</p>
           <p className="admin-card__status">Ready for future routes</p>
         </section>
 
         <section className="admin-card">
           <p className="admin-card__eyebrow">Settings</p>
-          <h2 className="admin-card__title">Operational configuration</h2>
-          <p className="admin-card__body">
-            Intended for low-frequency admin controls such as environment-backed
-            operational settings. Nothing is editable in this issue.
-          </p>
+          <h2 className="admin-card__title">Settings</h2>
+          <p className="admin-card__body">Settings are not live yet.</p>
           <p className="admin-card__status">Not wired yet</p>
         </section>
-      </section>
-
-      <section className="admin-panel">
-        <h2>Next actions</h2>
-        <p>
-          The admin foundation is now protected and structured. Future issues
-          can add attendee and status features into these sections without
-          reshaping the shell.
-        </p>
       </section>
     </section>
   );

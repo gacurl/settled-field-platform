@@ -1473,7 +1473,7 @@ a:hover {
 }
 
 .admin-card__title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   color: var(--color-primary);
   font-size: 1.5rem;
   line-height: 1.2;
@@ -1486,11 +1486,11 @@ a:hover {
 }
 
 .admin-card__status {
-  padding-top: var(--space-6);
+  padding-top: var(--space-4);
 }
 
 .admin-card__link {
-  padding-top: var(--space-6);
+  padding-top: var(--space-4);
 }
 
 .admin-panel {
@@ -1498,14 +1498,42 @@ a:hover {
 }
 
 .admin-panel h2 {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   color: var(--color-primary);
   font-size: 1.5rem;
   line-height: 1.2;
 }
 
 .admin-panel form {
+  display: grid;
+  gap: var(--space-6);
   margin-top: var(--space-6);
+}
+
+.admin-panel form > .admin-button {
+  margin-top: var(--space-2, 0.5rem);
+}
+
+.admin-panel--compact {
+  max-width: 36rem;
+}
+
+.admin-panel--compact h2 {
+  font-size: 1.25rem;
+}
+
+.admin-panel--compact form {
+  margin-top: var(--space-4);
+  gap: var(--space-5);
+}
+
+.admin-panel--compact form > .admin-button {
+  margin-top: var(--space-3, 0.75rem);
+}
+
+.admin-panel > .admin-panel {
+  max-width: none;
+  margin-top: var(--space-4);
 }
 
 .admin-panel--error h2,
@@ -1513,8 +1541,18 @@ a:hover {
   color: var(--color-primary);
 }
 
+.admin-panel--status {
+  max-width: 48rem;
+}
+
 .admin-panel--warning {
   max-width: 48rem;
+}
+
+.admin-panel--compact.admin-panel--status,
+.admin-panel--compact.admin-panel--warning,
+.admin-panel--compact.admin-panel--error {
+  max-width: none;
 }
 
 .admin-request-access__feedback,
@@ -1556,10 +1594,20 @@ a:hover {
 
 .admin-attendees__table th,
 .admin-attendees__table td {
-  padding: 1rem 0;
+  padding: 1rem 0.5rem;
   border-bottom: 1px solid var(--color-border);
   text-align: left;
   vertical-align: top;
+}
+
+.admin-attendees__table th:first-child,
+.admin-attendees__table td:first-child {
+  padding-left: 0;
+}
+
+.admin-attendees__table th:last-child,
+.admin-attendees__table td:last-child {
+  padding-right: 0;
 }
 
 .admin-attendees__table th {
@@ -1594,8 +1642,34 @@ a:hover {
   background: transparent;
 }
 
-.admin-users__action-form {
-  margin: 0;
+.admin-role-badge {
+  display: inline-block;
+  min-width: 4.75rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.admin-role-badge--owner {
+  background: var(--color-surface);
+}
+
+.admin-role-badge--admin {
+  background: transparent;
+}
+
+.admin-users__identity {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.admin-users__email {
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 .admin-users__actions {
@@ -1606,19 +1680,11 @@ a:hover {
 }
 
 .admin-users__disable-button {
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
+  color: var(--color-secondary);
 }
 
 .admin-users__remove-link {
   color: var(--color-secondary);
-}
-
-.admin-users__disable-button:disabled {
-  color: var(--color-muted);
-  cursor: default;
 }
 
 .admin-users__confirmation-actions {
@@ -1626,6 +1692,7 @@ a:hover {
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+  margin-top: var(--space-2);
 }
 
 .admin-users__action-note {
@@ -1728,6 +1795,10 @@ a:hover {
     gap: var(--space-4);
   }
 
+  .admin-users__actions {
+    gap: 0.5rem 0.75rem;
+  }
+
   .register-success-actions__links {
     width: 100%;
   }
@@ -1736,5 +1807,44 @@ a:hover {
   .register-success-actions__primary,
   .register-success-actions__secondary {
     width: 100%;
+  }
+
+  .admin-users__table thead {
+    display: none;
+  }
+
+  .admin-users__table,
+  .admin-users__table tbody,
+  .admin-users__table tr,
+  .admin-users__table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-users__table tr {
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .admin-users__table td {
+    display: grid;
+    grid-template-columns: minmax(6rem, 7.5rem) minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 0;
+    align-items: start;
+  }
+
+  .admin-users__table td::before {
+    content: attr(data-label);
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .admin-users__table td:last-child {
+    padding-bottom: 0;
   }
 }
