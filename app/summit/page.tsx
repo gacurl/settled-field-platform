@@ -126,9 +126,11 @@ export default function SummitPage() {
             </section>
           ))}
         </div>
-        <Link className="public-button" href={partnersContent.summit.cta.href}>
-          {partnersContent.summit.cta.label}
-        </Link>
+        <div className="public-actions">
+          <Link className="public-button" href={partnersContent.summit.cta.href}>
+            {partnersContent.summit.cta.label}
+          </Link>
+        </div>
       </section>
 
       <section className="public-section public-section--bordered">
