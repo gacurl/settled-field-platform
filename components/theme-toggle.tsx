@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useState } from "react";
-
-const THEME_STORAGE_KEY = "settled-theme";
-
-type ThemeMode = "light" | "dark";
+import {
+  THEME_COOKIE_NAME,
+  THEME_STORAGE_KEY,
+  type ThemeMode,
+} from "@/lib/theme";
 
 function applyTheme(theme: ThemeMode) {
   document.documentElement.dataset.theme = theme;
+  document.cookie = `${THEME_COOKIE_NAME}=${theme}; Path=/; Max-Age=31536000; SameSite=Lax`;
 }
 
 function SunIcon() {
@@ -58,21 +60,24 @@ export function ThemeToggle() {
       return "light";
     }
 
-    return window.localStorage.getItem(THEME_STORAGE_KEY) === "dark"
-      ? "dark"
-      : "light";
+    const documentTheme = document.documentElement.dataset.theme;
+
+    if (documentTheme === "dark" || documentTheme === "light") {
+      return documentTheme;
+    }
+
+    return window.localStorage.getItem(THEME_STORAGE_KEY) === "dark" ? "dark" : "light";
   });
 
   useEffect(() => {
     applyTheme(theme);
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
   function handleToggle() {
     const nextTheme = theme === "dark" ? "light" : "dark";
 
     setTheme(nextTheme);
-    applyTheme(nextTheme);
-    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   }
 
   return (
