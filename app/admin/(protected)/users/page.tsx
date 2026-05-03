@@ -454,6 +454,7 @@ export default async function AdminUsersPage({
                           href={`/admin/users?manage=${encodeURIComponent(
                             adminUser.normalizedEmail,
                           )}`}
+                          aria-label={`Update account for ${adminUser.email}`}
                         >
                           Update account
                         </Link>
@@ -464,6 +465,7 @@ export default async function AdminUsersPage({
                             href={`/admin/users?confirmDisable=${encodeURIComponent(
                               adminUser.normalizedEmail,
                             )}`}
+                            aria-label={`Disable access for ${adminUser.email}`}
                           >
                             Disable access
                           </Link>
@@ -479,6 +481,7 @@ export default async function AdminUsersPage({
                           <Link
                             className="admin-link-button admin-users__remove-link"
                             href={removeHref}
+                            aria-label={`Remove account for ${adminUser.email}`}
                           >
                             Remove account
                           </Link>
