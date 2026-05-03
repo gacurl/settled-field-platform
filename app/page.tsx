@@ -85,18 +85,6 @@ export default function HomePage() {
       </section>
 
       <section className="public-section public-section--bordered">
-        <p className="public-section__eyebrow">{landingContent.audience.eyebrow}</p>
-        <h2 className="public-section__heading">{landingContent.audience.heading}</h2>
-        <div className="audience-grid audience-grid--full">
-          {landingContent.audience.items.map((item) => (
-            <div className="audience-card" key={item}>
-              {item}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="public-section public-section--bordered">
         <p className="public-section__eyebrow">{landingContent.themes.eyebrow}</p>
         <h2 className="public-section__heading">{landingContent.themes.heading}</h2>
         <div className="public-theme-grid">
