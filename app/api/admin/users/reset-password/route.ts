@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { isCurrentAdminOwner } from "@/lib/admin-auth-server";
 import {
-  disableAdminUser,
   normalizeAdminEmail,
+  resetAdminUserPassword,
 } from "@/lib/admin-user-store";
 
 export async function POST(request: Request) {
@@ -12,37 +12,38 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const normalizedEmailEntry = formData.get("normalizedEmail");
+  const password = formData.get("password");
   const normalizedEmail = normalizeAdminEmail(
     typeof normalizedEmailEntry === "string" ? normalizedEmailEntry : "",
   );
 
-  if (!normalizedEmail) {
+  if (!normalizedEmail || typeof password !== "string") {
     return NextResponse.redirect(
-      new URL("/admin/users?error=disable-invalid", request.url),
+      new URL("/admin/users?error=reset-invalid", request.url),
       303,
     );
   }
 
   try {
-    await disableAdminUser(normalizedEmail);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "disable-invalid";
-
-    if (message === "Keep at least one active owner") {
-      return NextResponse.redirect(
-        new URL("/admin/users?error=keep-owner", request.url),
-        303,
-      );
-    }
-
+    await resetAdminUserPassword({
+      normalizedEmail,
+      password,
+    });
+  } catch {
     return NextResponse.redirect(
-      new URL("/admin/users?error=disable-invalid", request.url),
+      new URL(
+        `/admin/users?error=reset-invalid&manage=${encodeURIComponent(normalizedEmail)}`,
+        request.url,
+      ),
       303,
     );
   }
 
   return NextResponse.redirect(
-    new URL("/admin/users?status=user-disabled", request.url),
+    new URL(
+      `/admin/users?status=password-reset&manage=${encodeURIComponent(normalizedEmail)}`,
+      request.url,
+    ),
     303,
   );
 }
