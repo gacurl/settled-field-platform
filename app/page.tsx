@@ -9,10 +9,13 @@ export default function HomePage() {
       <section className="public-section public-section--hero public-hero-stage">
         <div className="page-wrapper page-wrapper--hero">
           <div className="public-hero-poster">
-            <img
+            <Image
               src="/assets/images/success-summit-hero.png"
               alt="Conference stage with panel discussion and audience"
               className="public-hero-poster__image"
+              priority
+              width={2048}
+              height={1365}
             />
 
             <div className="public-hero-poster__overlay">

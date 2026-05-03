@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Footer() {
@@ -44,10 +45,14 @@ export function Footer() {
           <p className="shell-footer__attribution">
             Built with care by{" "}
             <a href="https://gregcurl.dev" target="_blank" rel="noopener noreferrer">
-              <img
+              <Image
                 src="/assets/logos/curltech-logo-gray.svg"
                 alt="CurlTech"
                 className="shell-footer__logo-inline"
+                width={1218}
+                height={367}
+                loading="lazy"
+                unoptimized
               />
             </a>
           </p>
