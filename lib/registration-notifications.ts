@@ -1,5 +1,5 @@
 import type { RegistrationDraft, RegistrationFormValues } from "@/app/register/types";
-import { sendOwnerNotificationEmail } from "@/lib/smtp";
+import { sendEmail } from "@/lib/smtp";
 
 function buildNotificationBody(
   values: RegistrationFormValues,
@@ -22,8 +22,18 @@ export async function notifyOwnerOfRegistration(
   values: RegistrationFormValues,
   draft: RegistrationDraft,
 ) {
-  await sendOwnerNotificationEmail({
+  const ownerEmail = process.env.OWNER_NOTIFICATION_EMAIL;
+
+  if (!ownerEmail) {
+    console.warn("OWNER_NOTIFICATION_EMAIL missing; skipping email notification.");
+    return;
+  }
+
+  const body = buildNotificationBody(values, draft.submittedAt);
+
+  await sendEmail({
+    to: ownerEmail,
     subject: "New Settled on the Field interest registration",
-    text: buildNotificationBody(values, draft.submittedAt),
+    html: body.replace(/\n/g, "<br />"),
   });
 }

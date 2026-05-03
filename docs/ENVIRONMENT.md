@@ -6,20 +6,14 @@
 - STRIPE_PRICE_ID
 - NEXT_PUBLIC_BASE_URL
 
-## Interest Notification Email (7-11)
+### Email notifications
 
-- SMTP_HOST
-- SMTP_PORT
-- SMTP_USER
-- SMTP_PASS
-- SMTP_FROM
-- OWNER_NOTIFICATION_EMAIL
+Required for owner registration notifications:
 
-Behavior:
+- `RESEND_API_KEY`
+- `OWNER_NOTIFICATION_EMAIL`
 
-- registration success should not fail if email delivery fails
-- missing SMTP configuration means notifications are skipped
-- secrets stay server-side only
+Email delivery uses Resend. If `RESEND_API_KEY` is missing, registration still succeeds and email notification is skipped.
 
 ## Webhooks (4-2)
 
