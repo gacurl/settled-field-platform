@@ -58,24 +58,24 @@ export const summitContent = {
   },
   programStructure: {
     eyebrow: "Program Structure",
-    heading: "Three days, three focused tracks",
+    heading: "Three sessions, three focused tracks",
     cards: [
       {
-        title: "Day 1 — Mental + Identity",
+        title: "Session 1 — Mental + Identity",
         items: [
           "Mindset, resilience, and personal leadership",
           "Identity shifts after sport, service, or role change",
         ],
       },
       {
-        title: "Day 2 — Transition + Alignment",
+        title: "Session 2 — Transition + Alignment",
         items: [
           "Career direction, alignment, and next-step clarity",
           "Leadership conversations across education, sport, and industry",
         ],
       },
       {
-        title: "Day 3 — Action + Execution",
+        title: "Session 3 — Action + Execution",
         items: [
           "Practical strategies for momentum after the summit",
           "Execution planning, accountability, and connection",
